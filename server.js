@@ -14,28 +14,46 @@ app.use(express.static('public'));
 // Database setup
 const db = new sqlite3.Database('./database.sqlite');
 
-// Crea tabella se non esiste
-db.run(`
-  CREATE TABLE IF NOT EXISTS visitors (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    count INTEGER DEFAULT 0,
-    last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-  )
-`);
-
-// Inizializza il contatore se vuoto (con numero casuale tra 500 e 2000)
-db.get("SELECT COUNT(*) as count FROM visitors", (err, row) => {
-  if (err) {
-    console.error('❌ Errore database:', err);
-    return;
-  }
-  if (row.count === 0) {
-    const initialCount = Math.floor(Math.random() * 1500) + 500;
-    db.run("INSERT INTO visitors (count) VALUES (?)", [initialCount]);
-    console.log(`✅ Contatore inizializzato a ${initialCount} visite`);
-  } else {
-    console.log('✅ Database già esistente');
-  }
+// Crea la tabella SE NON ESISTE (questo è fondamentale!)
+db.serialize(() => {
+  db.run(`
+    CREATE TABLE IF NOT EXISTS visitors (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      count INTEGER DEFAULT 0,
+      last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+  `, (err) => {
+    if (err) {
+      console.error('❌ Errore creazione tabella:', err);
+    } else {
+      console.log('✅ Tabella "visitors" creata/verificata');
+      
+      // Ora che la tabella esiste, controlla se è vuota e inizializza
+      db.get("SELECT COUNT(*) as count FROM visitors", (err, row) => {
+        if (err) {
+          console.error('❌ Errore lettura conteggio:', err);
+          return;
+        }
+        if (row.count === 0) {
+          const initialCount = 0;
+          db.run("INSERT INTO visitors (count) VALUES (?)", [initialCount], (err) => {
+            if (err) {
+              console.error('❌ Errore inserimento iniziale:', err);
+            } else {
+              console.log(`✅ Contatore inizializzato a ${initialCount} visite`);
+            }
+          });
+        } else {
+          // Leggi e mostra il conteggio attuale
+          db.get("SELECT count FROM visitors LIMIT 1", (err, row2) => {
+            if (!err && row2) {
+              console.log(`📊 Contatore attuale: ${row2.count} visite`);
+            }
+          });
+        }
+      });
+    }
+  });
 });
 
 // ============ API ROUTES ============
@@ -72,17 +90,17 @@ app.post('/api/visitors/increment', (req, res) => {
       }
       res.json({ 
         success: true, 
-        count: row.count,
+        count: row ? row.count : 0,
         message: 'Visita registrata!'
       });
     });
   });
 });
 
-// 3. (Opzionale) RESET - Solo per admin (proteggi con chiave)
+// 3. RESET - Solo per admin
 app.post('/api/visitors/reset', (req, res) => {
   const adminKey = req.headers['x-admin-key'];
-  if (adminKey !== 'ItalianFlexAdmin2026') {
+  if (adminKey !== 'exotic') {
     return res.status(403).json({ error: 'Unauthorized' });
   }
   
@@ -102,7 +120,7 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Per qualsiasi altra rotta, restituisci index.html (per supportare routing frontend)
+// Per qualsiasi altra rotta, restituisci index.html
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
