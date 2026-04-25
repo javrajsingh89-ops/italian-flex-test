@@ -165,6 +165,43 @@
   }
   .nav-cta:hover { transform: scale(1.05); box-shadow: 0 16px 36px rgba(255,183,77,0.62) !important; color: #10233f !important; }
 
+  /* Contatore visite navbar */
+  .nav-counter {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(0, 0, 0, 0.35);
+    border-radius: 50px;
+    padding: 5px 14px 5px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(4px);
+    flex-shrink: 0;
+  }
+  .counter-eye {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .eye-icon {
+    width: 22px;
+    height: 22px;
+    filter: brightness(0) invert(1);
+    opacity: 0.9;
+  }
+  .counter-number {
+    font-family: 'Orbitron', monospace;
+    font-weight: 900;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    color: var(--cyan);
+    text-shadow: 0 0 4px rgba(0, 255, 231, 0.5);
+    background: rgba(0, 0, 0, 0.3);
+    padding: 2px 8px;
+    border-radius: 30px;
+    min-width: 55px;
+    text-align: center;
+  }
+
   /* ========= HERO ========= */
   #hero {
     position: relative;
@@ -880,6 +917,9 @@
   @media (max-width: 768px) {
     nav { top: 10px; padding: 10px 14px; gap: 14px; }
     .nav-links { display: none; }
+    .nav-counter { padding: 3px 10px 3px 8px; }
+    .eye-icon { width: 18px; height: 18px; }
+    .counter-number { font-size: 0.7rem; min-width: 45px; }
     section { padding: 60px 20px; }
     .map-showcase { grid-template-columns: 1fr; }
     .events-banner { padding: 30px; }
@@ -908,6 +948,12 @@
     <li><a href="#eventi">Eventi</a></li>
     <li><a href="#countdown" class="nav-cta">🚀 13/06/2026</a></li>
   </ul>
+  <div class="nav-counter">
+    <span class="counter-eye">
+      <img src="https://cdn-icons-png.freepik.com/512/10784/10784416.png" alt="visualizzazioni" class="eye-icon" onerror="this.src='https://cdn-icons-png.flaticon.com/512/10784/10784416.png'">
+    </span>
+    <span class="counter-number" id="visitorCount">0</span>
+  </div>
 </nav>
 
 <!-- HERO -->
@@ -1111,7 +1157,7 @@
   </svg>
 </div>
 
-<!-- EVENTI (con impronte, scuriti, senza emoji) -->
+<!-- EVENTI -->
 <section id="eventi">
   <div class="beach-cursor-layer" id="beachCursorLayerEvents"></div>
   <div class="container">
@@ -1129,7 +1175,7 @@
   </div>
 </section>
 
-<!-- COUNTDOWN (scurito) -->
+<!-- COUNTDOWN -->
 <section id="countdown">
   <div class="beach-cursor-layer" id="beachCursorLayerCountdown"></div>
   <div class="container">
@@ -1265,7 +1311,7 @@
     starsContainer.appendChild(star);
   }
 
-  // IMPRONTE SULLA SPIAGGIA (eventi e countdown)
+  // IMPRONTE SULLA SPIAGGIA
   function setupFootprints(sectionId) {
     const section = document.getElementById(sectionId);
     if (!section) return;
@@ -1297,7 +1343,7 @@
   setupFootprints('eventi');
   setupFootprints('countdown');
 
-   // COUNTDOWN
+  // COUNTDOWN
   function updateCountdown() {
     const diff = new Date('2026-06-13T00:00:00').getTime() - Date.now();
     if (diff <= 0) { ['cd-days','cd-hours','cd-mins','cd-secs'].forEach(id => document.getElementById(id).textContent = '00'); return; }
@@ -1309,8 +1355,7 @@
   updateCountdown();
   setInterval(updateCountdown, 1000);
 
-  // ========== CONTATORE GLOBALE CON BACKEND ==========
-  // DICHIARO PRIMA LA FUNZIONE FALLBACK
+  // CONTATORE GLOBALE CON BACKEND
   function fallbackLocalCounter() {
     let count = localStorage.getItem('fallbackCounter');
     if (!count) {
@@ -1325,16 +1370,12 @@
     }
   }
 
-  // POI LA FUNZIONE PRINCIPALE
   async function updateGlobalCounter() {
     try {
-      // ⚠️ QUANDO FARAI IL DEPLOY, CAMBIA QUESTO URL!
-      // Per ora in locale: '/api/visitors/increment'
-      // Dopo il deploy su Render: 'https://tuo-sito.onrender.com/api/visitors/increment'
-      const incrementRes = await fetch('https://italian-flex-test.onrender.com/api/visitors/increment', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' }
-});
+      const incrementRes = await fetch('/api/visitors/increment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+      });
       
       if (!incrementRes.ok) throw new Error('Increment failed');
       const incrementData = await incrementRes.json();
@@ -1351,7 +1392,6 @@
     }
   }
 
-  // AVVIA IL CONTATORE
   document.addEventListener('DOMContentLoaded', () => {
     updateGlobalCounter();
   });
