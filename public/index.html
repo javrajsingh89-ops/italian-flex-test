@@ -399,109 +399,53 @@ nav {
     to { transform: translateX(-50%); }
   }
 
-  /* ===== LOGO ANIMATO 3D CON SCIA E MOUSE TRACKING ===== */
-  .hero-logo-container {
-    position: relative;
-    display: inline-block;
-    margin-bottom: 30px;
-    filter: drop-shadow(0 0 15px rgba(0, 255, 255, 0.5));
-    animation: floatLogo 4s ease-in-out infinite;
-    perspective: 800px;
-    cursor: pointer;
-  }
+ /* ===== LOGO ANIMATO 3D CON MOUSE TRACKING ===== */
+.hero-logo-container {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 30px;
+  filter: drop-shadow(0 0 15px rgba(0, 255, 255, 0.5));
+  animation: floatLogo 4s ease-in-out infinite;
+  perspective: 800px;
+  cursor: pointer;
+}
 
-  .hero-logo-img {
-    display: block;
-    width: 200px;
-    max-width: 35vw;
-    height: auto;
-    transition: transform 0.1s ease-out;
-    will-change: transform;
-    filter: drop-shadow(0 0 8px rgba(255,255,255,0.8));
-  }
+.hero-logo-img {
+  display: block;
+  width: 280px;
+  max-width: 45vw;
+  height: auto;
+  transition: transform 0.1s ease-out;
+  will-change: transform;
+  filter: drop-shadow(0 0 8px rgba(255,255,255,0.8));
+}
 
-  /* Scia luminosa */
-  .light-trail {
-    position: absolute;
-    top: 10%;
-    left: -30%;
-    width: 160%;
-    height: 80%;
-    background: linear-gradient(90deg, 
-      transparent, 
-      rgba(255, 255, 255, 0.7), 
-      rgba(0, 255, 255, 0.9), 
-      rgba(255, 255, 255, 0.7), 
-      transparent);
-    filter: blur(12px);
-    opacity: 0;
-    transform: skewX(-20deg);
-    pointer-events: none;
-    z-index: -1;
-    animation: trailMove 5s linear infinite;
-  }
+/* Fluttuazione */
+@keyframes floatLogo {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-15px) rotate(2deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
 
-  /* Fluttuazione */
-  @keyframes floatLogo {
-    0% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(-15px) rotate(2deg); }
-    100% { transform: translateY(0px) rotate(0deg); }
-  }
+/* Riflesso speculare sotto */
+.hero-logo-container::after {
+  content: '';
+  position: absolute;
+  bottom: -25px;
+  left: 10%;
+  width: 80%;
+  height: 35px;
+  background: radial-gradient(ellipse, rgba(255,255,255,0.4), transparent 70%);
+  filter: blur(8px);
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: reflectionPulse 3s ease-in-out infinite;
+}
 
-  /* Movimento scia */
-  @keyframes trailMove {
-    0% { left: -50%; opacity: 0; }
-    20% { opacity: 0.8; }
-    80% { opacity: 0.8; }
-    100% { left: 100%; opacity: 0; }
-  }
-
-  /* Riflesso speculare sotto */
-  .hero-logo-container::after {
-    content: '';
-    position: absolute;
-    bottom: -20px;
-    left: 10%;
-    width: 80%;
-    height: 30px;
-    background: radial-gradient(ellipse, rgba(255,255,255,0.4), transparent 70%);
-    filter: blur(8px);
-    border-radius: 50%;
-    opacity: 0.6;
-    animation: reflectionPulse 3s ease-in-out infinite;
-  }
-
-  @keyframes reflectionPulse {
-    0%, 100% { opacity: 0.3; transform: scaleX(0.8); }
-    50% { opacity: 0.8; transform: scaleX(1.1); }
-  }
-
-  .hero-date-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    background: rgba(255,255,255,0.12);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.25);
-    border-radius: 50px;
-    padding: 10px 28px;
-    font-weight: 900;
-    font-size: 1rem;
-    letter-spacing: 2px;
-    margin: 20px 0 40px;
-    animation: fadeInUp 1s ease 0.7s both;
-  }
-  .hero-date-badge .pin { animation: bounce 1s ease infinite; display: inline-block; }
-  @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
-
-  .hero-buttons {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-    animation: fadeInUp 1s ease 0.9s both;
-  }
-
+@keyframes reflectionPulse {
+  0%, 100% { opacity: 0.3; transform: scaleX(0.8); }
+  50% { opacity: 0.8; transform: scaleX(1.1); }
+}
   /* BOTTONI ANIMATI */
   .btn-roblox, .btn-discord {
     display: inline-flex;
@@ -1141,10 +1085,11 @@ nav {
   <div class="hero-bubbles" id="heroBubbles"></div>
 
   <!-- LOGO ANIMATO 3D (al posto del titolo testuale) -->
-  <div class="hero-logo-container" id="heroLogo">
-    <img src="https://i.ibb.co/4nTm4r3H/ab67ade49164324b9392f10d4b5be720.webp" alt="Italian Flex Logo" class="hero-logo-img" id="floatingLogo">
-    <div class="light-trail"></div>
-  </div>
+  <!-- LOGO ANIMATO 3D (al posto del titolo testuale) -->
+<div class="hero-logo-container" id="heroLogo">
+  <img src="https://i.ibb.co/4nTm4r3H/ab67ade49164324b9392f10d4b5be720.webp" alt="Italian Flex Logo" class="hero-logo-img" id="floatingLogo">
+  <!-- NON C'E' PIU' light-trail -->
+</div>
 
   <div class="hero-date-badge">
     <span class="pin">📌</span>
