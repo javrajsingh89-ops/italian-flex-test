@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Italian Flex — Roblox</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Boogaloo&family=Nunito:wght@400;700;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #009246;
+    --white: #f5f5f5;
+    --red: #ce2b37;
+    --yellow: #f5c518;
+    --blue: #1a8fe3;
+    --blue-soft: #5dc7ff;
+    --dark: #050d1a;
+    --darker: #030810;
+    --cyan: #00ffe7;
+    --gold: #ffd700;
+    --sand: #f4d06f;
+    --sand-soft: #f8e2a8;
+    --ocean: #1a7fc4;
+    --ocean-dark: #0e4a7a;
+    --discord-blue: #5865F2;
+    --roblox-red: #fb3b3b;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: linear-gradient(180deg, #0a1e3d 0%, #0e3b6e 30%, #155d99 60%, #1e7abf 80%, #2596d8 100%);
+    color: var(--white);
+    font-family: 'Nunito', sans-serif;
+    overflow-x: hidden;
+    cursor: default;
+    min-height: 100vh;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 30% 10%, rgba(255,220,100,0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 70% 5%, rgba(255,255,255,0.05) 0%, transparent 40%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* PARTICLES (bolle) */
+  #particles { position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    animation: floatUp linear infinite;
+    opacity: 0;
+  }
+  @keyframes floatUp {
+    0%   { transform: translateY(100vh); opacity: 0; }
+    10%  { opacity: 0.6; }
+    90%  { opacity: 0.6; }
+    100% { transform: translateY(-10vh); opacity: 0; }
+  }
+
+  /* ====== WAVES ====== */
+  .wave-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    z-index: 2;
+  }
+  .wave-container svg { display: block; width: 100%; }
+
+  /* Bottom ocean waves - fixed */
+  #ocean-floor {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    height: 120px;
+    z-index: 1;
+    pointer-events: none;
+  }
+  #ocean-floor svg { width: 100%; height: 100%; }
+
+  /* ====== NAV — liquid glass pill ====== */
+  nav {
+    position: fixed;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    width: min(1180px, calc(100% - 24px));
+    padding: 10px 18px;
+    min-height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 100px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2);
+    animation: slideDown 0.8s ease;
+    white-space: nowrap;
+  }
+  @keyframes slideDown { from { transform: translateX(-50%) translateY(-80px); opacity: 0; } to { transform: translateX(-50%) translateY(0); opacity: 1; } }
+
+  .nav-logo {
+    font-family: 'Boogaloo', cursive;
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+    display: flex;
+    gap: 0;
+    flex-shrink: 0;
+  }
+  .nav-logo .nl-i { color: var(--green); }
+  .nav-logo .nl-t { color: #fff; }
+  .nav-logo .nl-a { color: var(--red); }
+  .nav-logo .nl-l { color: var(--yellow); }
+  .nav-logo .nl-ia2 { color: var(--blue); }
+  .nav-logo .nl-n { color: var(--green); }
+  .nav-logo .nl-sp { color: transparent; width: 6px; display: inline-block; }
+  .nav-logo .nl-f { color: var(--blue); }
+  .nav-logo .nl-le { color: var(--yellow); }
+  .nav-logo .nl-lx { color: var(--red); }
+
+  .nav-links {
+    display: flex;
+    gap: 10px;
+    list-style: none;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  .nav-links a {
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.82rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    transition: color 0.25s, background 0.25s, border-color 0.25s, transform 0.25s;
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+  }
+  .nav-links a:hover {
+    color: #fff;
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.16);
+    transform: translateY(-1px);
+  }
+
+  .nav-cta {
+    background: linear-gradient(135deg, #fff6bf 0%, #ffd86a 45%, #ff8d4d 100%);
+    color: #10233f !important;
+    padding: 8px 18px;
+    border-radius: 50px;
+    font-weight: 900 !important;
+    font-size: 0.82rem !important;
+    box-shadow: 0 12px 30px rgba(255,171,74,0.45);
+    transition: transform 0.2s, box-shadow 0.2s !important;
+  }
+  .nav-cta:hover { transform: scale(1.05); box-shadow: 0 16px 36px rgba(255,183,77,0.62) !important; color: #10233f !important; }
+
+  /* ========= HERO ========= */
+  #hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    z-index: 2;
+    padding: 120px 20px 80px;
+    overflow: hidden;
+  }
+
+  /* HERO BACKGROUND: sky + sea */
+  .hero-sky {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 20% 18%, rgba(255,255,255,0.18) 0%, transparent 18%),
+      radial-gradient(circle at 80% 8%, rgba(140,220,255,0.16) 0%, transparent 22%),
+      linear-gradient(180deg, #17345d 0%, #1f5f9f 42%, #2f8fcb 72%, #4dbfe5 100%);
+  }
+
+  /* CLOUDS */
+  .cloud {
+    position: absolute;
+    background: rgba(255,255,255,0.85);
+    border-radius: 50px;
+    filter: blur(6px);
+    animation: cloudDrift linear infinite;
+  }
+  .cloud::before, .cloud::after {
+    content: '';
+    position: absolute;
+    background: rgba(255,255,255,0.85);
+    border-radius: 50%;
+  }
+  .c1 { width: 180px; height: 40px; top: 15%; left: -200px; animation-duration: 40s; }
+  .c1::before { width: 70px; height: 70px; top: -30px; left: 20px; }
+  .c1::after { width: 50px; height: 50px; top: -20px; left: 80px; }
+  .c2 { width: 120px; height: 30px; top: 22%; left: -150px; animation-duration: 55s; animation-delay: -20s; opacity: 0.7; }
+  .c2::before { width: 50px; height: 50px; top: -25px; left: 15px; }
+  .c3 { width: 200px; height: 45px; top: 10%; left: -250px; animation-duration: 70s; animation-delay: -35s; opacity: 0.6; }
+  .c3::before { width: 80px; height: 80px; top: -35px; left: 30px; }
+  .c3::after { width: 60px; height: 60px; top: -25px; left: 100px; }
+  @keyframes cloudDrift { from { left: -250px; } to { left: 110%; } }
+
+  /* ANIMATED OCEAN in hero */
+  .hero-ocean {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 42%;
+    pointer-events: none;
+  }
+  .hero-ocean svg { width: 200%; height: 100%; animation: waveScroll 8s linear infinite; }
+  @keyframes waveScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  .hero-waterlife,
+  .hero-bubbles {
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 42%;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .hero-bubbles { overflow: hidden; }
+  .marine-divider {
+    position: relative;
+    height: 96px;
+    margin-top: -12px;
+    margin-bottom: -12px;
+    overflow: hidden;
+    z-index: 3;
+    pointer-events: none;
+  }
+  .marine-divider svg {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 200%;
+    height: 100%;
+    animation: marineWave 14s linear infinite;
+  }
+  .marine-divider .wave-mid { opacity: 0.55; animation-duration: 18s; }
+  .marine-divider .wave-top { opacity: 0.36; animation-duration: 22s; }
+  @keyframes marineWave {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* TITLE */
+  .hero-title {
+    font-family: 'Boogaloo', cursive;
+    font-size: clamp(5rem, 14vw, 12rem);
+    line-height: 0.9;
+    letter-spacing: -2px;
+    margin-bottom: 10px;
+    animation: fadeInUp 1s ease 0.3s both;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.18s ease-out;
+    text-shadow: 0 18px 40px rgba(4,15,30,0.28);
+  }
+  .title-stroke { -webkit-text-stroke: 3px rgba(0,0,0,0.4); }
+  .t-i { color: var(--green); }
+  .t-t { color: #fff; }
+  .t-a { color: var(--red); }
+  .t-l { color: var(--yellow); }
+  .t-ia { color: var(--blue); }
+  .t-n { color: var(--green); }
+  .t-f { color: var(--blue); text-shadow: 0 0 40px rgba(26,143,227,0.9); }
+  .t-le { color: var(--yellow); text-shadow: 0 0 40px rgba(245,197,24,0.9); }
+  .t-lx { color: var(--red); text-shadow: 0 0 40px rgba(206,43,55,0.9); }
+
+  .hero-date-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 50px;
+    padding: 10px 28px;
+    font-weight: 900;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    margin: 20px 0 40px;
+    animation: fadeInUp 1s ease 0.7s both;
+  }
+  .hero-date-badge .pin { animation: bounce 1s ease infinite; display: inline-block; }
+  @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+
+  .hero-buttons {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    animation: fadeInUp 1s ease 0.9s both;
+  }
+
+  /* BOTTONI ANIMATI */
+  .btn-roblox, .btn-discord {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 32px;
+    border-radius: 50px;
+    font-family: 'Orbitron', monospace;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+    cursor: pointer;
+    position: relative;
+    z-index: 10;
+    overflow: hidden;
+    outline: none;
+    border: none;
+    -webkit-appearance: none;
+    appearance: none;
+    user-select: none;
+    color: white;
+  }
+  .btn-roblox {
+    background: linear-gradient(135deg, #e53935 0%, #b71c1c 100%);
+    border-bottom: 3px solid #ff8a80 !important;
+    box-shadow: 0 8px 20px rgba(183, 28, 28, 0.35);
+    animation: pulseRoblox 2.4s ease-in-out infinite;
+  }
+  @keyframes pulseRoblox {
+    0%, 100% { box-shadow: 0 8px 20px rgba(183,28,28,0.35), 0 0 0 0 rgba(229,57,53,0.45); }
+    50%      { box-shadow: 0 8px 20px rgba(183,28,28,0.35), 0 0 0 10px rgba(229,57,53,0); }
+  }
+  .btn-discord {
+    background: linear-gradient(135deg, #7289da 0%, #5865F2 100%);
+    border-bottom: 3px solid #3b48c8 !important;
+    box-shadow: 0 8px 20px rgba(88, 101, 242, 0.35);
+    animation: pulseDiscord 2.4s ease-in-out infinite;
+  }
+  @keyframes pulseDiscord {
+    0%, 100% { box-shadow: 0 8px 20px rgba(88,101,242,0.35), 0 0 0 0 rgba(88,101,242,0.45); }
+    50%      { box-shadow: 0 8px 20px rgba(88,101,242,0.35), 0 0 0 10px rgba(88,101,242,0); }
+  }
+  .btn-roblox img, .btn-discord img {
+    width: 24px;
+    height: 24px;
+    filter: none;
+  }
+  .btn-roblox:hover {
+    transform: translateY(-4px) scale(1.04);
+    box-shadow: 0 16px 36px rgba(229,57,53,0.45);
+    animation: none;
+  }
+  .btn-discord:hover {
+    transform: translateY(-4px) scale(1.04);
+    box-shadow: 0 16px 36px rgba(88,101,242,0.5);
+    animation: none;
+  }
+
+  /* ========= SECTIONS ========= */
+  section { position: relative; z-index: 2; padding: 90px 40px; }
+
+  /* BEACH SECTION BG */
+  .beach-section {
+    background: linear-gradient(180deg, rgba(10,30,60,0.0) 0%, rgba(10,30,60,0.85) 100%);
+    position: relative;
+  }
+
+  .section-label {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--cyan);
+    opacity: 0.9;
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Boogaloo', cursive;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+  .section-divider {
+    width: 80px; height: 3px;
+    background: linear-gradient(90deg, var(--blue), var(--cyan));
+    border-radius: 2px;
+    margin-bottom: 50px;
+  }
+  .container { max-width: 1200px; margin: 0 auto; }
+
+  /* ======= MINIGAMES ======= */
+  #minigames {
+    background: transparent;
+    backdrop-filter: blur(2px);
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+  }
+
+  .card { text-align: center;
+    position: relative;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 32px 24px;
+    overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+    cursor: default;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    border-radius: 20px 20px 0 0;
+  }
+  .card:hover { transform: translateY(-8px); }
+  .card-green::before { background: linear-gradient(90deg, var(--green), var(--cyan)); }
+  .card-blue::before  { background: linear-gradient(90deg, var(--blue), #7c3aed); }
+  .card-red::before   { background: linear-gradient(90deg, var(--red), var(--yellow)); }
+  .card-yellow::before { background: linear-gradient(90deg, var(--yellow), var(--red)); }
+  .card:hover.card-green  { border-color: rgba(0,146,70,0.5); box-shadow: 0 20px 60px rgba(0,146,70,0.2); }
+  .card:hover.card-blue   { border-color: rgba(26,143,227,0.5); box-shadow: 0 20px 60px rgba(26,143,227,0.2); }
+  .card:hover.card-red    { border-color: rgba(206,43,55,0.5); box-shadow: 0 20px 60px rgba(206,43,55,0.2); }
+  .card:hover.card-yellow { border-color: rgba(245,197,24,0.5); box-shadow: 0 20px 60px rgba(245,197,24,0.2); }
+
+  .card-icon {
+    font-size: 2.8rem;
+    margin-bottom: 16px;
+    display: block;
+    animation: iconBob 3s ease-in-out infinite;
+  }
+  @keyframes iconBob {
+    0%, 100% { transform: translateY(0px); }
+    50%       { transform: translateY(-8px); }
+  }
+
+  .card-tag {
+    display: inline-block;
+    font-size: 0.65rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+    font-weight: 700;
+  }
+  .tag-green  { background: rgba(0,146,70,0.2); color: #4ade80; border: 1px solid rgba(0,146,70,0.3); }
+  .tag-blue   { background: rgba(26,143,227,0.2); color: #60a5fa; border: 1px solid rgba(26,143,227,0.3); }
+  .tag-red    { background: rgba(206,43,55,0.2); color: #f87171; border: 1px solid rgba(206,43,55,0.3); }
+  .tag-yellow { background: rgba(245,197,24,0.2); color: #fbbf24; border: 1px solid rgba(245,197,24,0.3); }
+  .tag-secret { background: rgba(139,92,246,0.2); color: #a78bfa; border: 1px solid rgba(139,92,246,0.3); }
+
+  .card h3 { font-family: 'Boogaloo', cursive; font-size: 1.6rem; }
+
+  .mystery-card {
+    background: repeating-linear-gradient(
+      45deg,
+      rgba(139,92,246,0.04),
+      rgba(139,92,246,0.04) 10px,
+      rgba(255,255,255,0.01) 10px,
+      rgba(255,255,255,0.01) 20px
+    );
+    border: 1px dashed rgba(139,92,246,0.3);
+  }
+  .mystery-card::before { background: linear-gradient(90deg, #7c3aed, #a78bfa); }
+  .mystery-card:hover { border-color: rgba(139,92,246,0.5); box-shadow: 0 20px 60px rgba(139,92,246,0.2); }
+
+  /* ======= GAMEPASSES ======= */
+  #gamepasses { background: transparent; }
+
+  .gp-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 16px;
+  }
+
+  .gp-item {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 28px 16px;
+    text-align: center;
+    transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
+    cursor: default;
+  }
+  .gp-item:hover {
+    transform: scale(1.08);
+    background: rgba(255,215,0,0.08);
+    border-color: rgba(255,215,0,0.3);
+    box-shadow: 0 10px 40px rgba(255,215,0,0.15);
+  }
+  .gp-icon { font-size: 2.4rem; margin-bottom: 10px; display: block; animation: iconBob 3s ease-in-out infinite; }
+  .gp-item:nth-child(2) .gp-icon { animation-delay: -0.5s; }
+  .gp-item:nth-child(3) .gp-icon { animation-delay: -1s; }
+  .gp-item:nth-child(4) .gp-icon { animation-delay: -1.5s; }
+  .gp-item:nth-child(5) .gp-icon { animation-delay: -2s; }
+  .gp-item:nth-child(6) .gp-icon { animation-delay: -2.5s; }
+  .gp-item:nth-child(7) .gp-icon { animation-delay: -0.8s; }
+  .gp-name { font-family: 'Boogaloo', cursive; font-size: 1.05rem; color: var(--gold); }
+
+  .gp-vip {
+    background: linear-gradient(135deg, rgba(255,215,0,0.12), rgba(255,165,0,0.05));
+    border: 1px solid rgba(255,215,0,0.35);
+    position: relative; overflow: hidden;
+  }
+  .gp-vip::after {
+    content: 'VIP';
+    position: absolute;
+    top: 8px; right: -14px;
+    background: var(--gold);
+    color: #000;
+    font-size: 0.6rem;
+    font-weight: 900;
+    letter-spacing: 1px;
+    padding: 2px 20px;
+    transform: rotate(45deg);
+  }
+
+  /* ======= COINS ======= */
+  #coins {
+    padding: 80px 40px;
+    background: transparent;
+  }
+  .coins-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .coin-card { border-radius: 24px; padding: 40px; text-align: center; }
+  .coin-card.flex-coins {
+    background: linear-gradient(135deg, rgba(255,215,0,0.15), rgba(255,165,0,0.05));
+    border: 1px solid rgba(255,215,0,0.3);
+  }
+  .coin-card.social-credits {
+    background: linear-gradient(135deg, rgba(26,143,227,0.15), rgba(0,255,231,0.05));
+    border: 1px solid rgba(26,143,227,0.3);
+  }
+  .coin-emoji { font-size: 3.5rem; margin-bottom: 16px; display: block; animation: iconBob 2.5s ease-in-out infinite; }
+  .coin-name { font-family: 'Boogaloo', cursive; font-size: 1.8rem; margin-bottom: 8px; }
+  .coin-desc { opacity: 0.6; font-size: 0.9rem; line-height: 1.5; }
+
+  /* ======= MAPPA ======= */
+  #mappa { background: transparent; }
+  .map-showcase {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: center;
+  }
+  .map-visual {
+    position: relative;
+    aspect-ratio: 16/9;
+    border-radius: 24px;
+    overflow: hidden;
+    border: 2px solid rgba(26,143,227,0.4);
+    box-shadow: 0 30px 70px rgba(10,47,83,0.32);
+    transform-style: preserve-3d;
+    transition: transform 0.18s ease-out, box-shadow 0.3s ease;
+  }
+  .map-visual img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.35s ease;
+  }
+  .map-visual:hover {
+    box-shadow: 0 38px 90px rgba(23,125,201,0.3);
+  }
+  .map-visual:hover img { transform: scale(1.06); }
+  .map-visual-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(255,255,255,0.06), transparent 32%, rgba(5,15,40,0.62) 100%);
+    pointer-events: none;
+  }
+  .map-features { list-style: none; }
+  .map-features li {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    font-size: 0.95rem;
+  }
+  .map-features li:last-child { border-bottom: none; }
+  .feat-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+  .fi-green  { background: rgba(0,146,70,0.2); border: 1px solid rgba(0,146,70,0.3); }
+  .fi-blue   { background: rgba(26,143,227,0.2); border: 1px solid rgba(26,143,227,0.3); }
+  .fi-red    { background: rgba(206,43,55,0.2); border: 1px solid rgba(206,43,55,0.3); }
+  .fi-yellow { background: rgba(245,197,24,0.2); border: 1px solid rgba(245,197,24,0.3); }
+  .fi-purple { background: rgba(139,92,246,0.2); border: 1px solid rgba(139,92,246,0.3); }
+
+  /* ======= VEHICLES — 4-col grid ======= */
+  .shore-divider {
+    position: relative;
+    height: 170px;
+    margin-top: -20px;
+    z-index: 3;
+    overflow: hidden;
+    background: linear-gradient(180deg, rgba(13,68,108,0.15) 0%, rgba(52,142,196,0.2) 34%, rgba(214,184,129,0.62) 100%);
+  }
+  .shore-divider svg {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    width: 200%;
+    height: 110px;
+    animation: wavePulse 9s ease-in-out infinite alternate;
+  }
+  .shore-divider .wave-back {
+    bottom: 54px;
+    opacity: 0.55;
+    animation-duration: 11s;
+  }
+  @keyframes wavePulse {
+    from { transform: translateX(0) translateY(0); }
+    to { transform: translateX(-18%) translateY(10px); }
+  }
+
+  /* ======= EVENTI (scuriti, senza emoji, testo centrato) ======= */
+  #eventi {
+    padding: 110px 40px 120px;
+    background: 
+      radial-gradient(circle at 50% 15%, rgba(0,0,0,0.3), transparent 30%),
+      linear-gradient(180deg, #a7d5df 0%, #bfdde2 14%, #d3b07a 46%, #c89862 100%);
+    overflow: hidden;
+    position: relative;
+  }
+  #eventi::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.25);
+    pointer-events: none;
+    z-index: 0;
+  }
+  #eventi .container {
+    position: relative;
+    z-index: 2;
+  }
+  .events-banner {
+    background: linear-gradient(135deg, rgba(0,0,0,0.5), rgba(0,0,0,0.4));
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,239,205,0.3);
+    border-radius: 24px;
+    padding: 50px 60px;
+    text-align: center;
+  }
+  .events-banner h2 { font-family: 'Boogaloo', cursive; font-size: 2.5rem; margin-bottom: 12px; color: #fff3d8; }
+  .events-banner p { color: rgba(255,241,222,0.9); line-height: 1.7; max-width: 500px; margin: 0 auto; }
+
+  /* IMPRONTE SULLA SPIAGGIA */
+  .beach-cursor-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 1;
+  }
+  .footprint {
+    position: absolute;
+    width: 26px;
+    height: 14px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 50%, rgba(124,78,38,0.6), rgba(124,78,38,0.2) 72%, transparent 76%);
+    filter: blur(0.4px);
+    animation: footprintFade 5s linear forwards;
+  }
+  .footprint::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 6px;
+    right: 2px;
+    top: 2px;
+    border-radius: 50%;
+    background: rgba(124,78,38,0.3);
+    transform: rotate(22deg);
+  }
+  @keyframes footprintFade {
+    0% { opacity: 0.65; transform: scale(1); }
+    100% { opacity: 0; transform: scale(1.06); }
+  }
+
+  /* ======= COUNTDOWN (scurito) ======= */
+  #countdown {
+    padding: 100px 40px;
+    text-align: center;
+    background: linear-gradient(180deg, #c89862 0%, #b98758 100%);
+    overflow: hidden;
+    position: relative;
+  }
+  #countdown::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.2);
+    pointer-events: none;
+    z-index: 0;
+  }
+  #countdown .container {
+    position: relative;
+    z-index: 2;
+  }
+  .countdown-title { font-family: 'Boogaloo', cursive; font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 12px; color: #fff1d2; text-shadow: 0 0 5px rgba(0,0,0,0.5); }
+  .countdown-sub { opacity: 0.9; font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 50px; color: rgba(255,236,205,0.9); }
+  .countdown-grid { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+  .cd-unit {
+    min-width: 120px;
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(255,227,174,0.3);
+    border-radius: 20px;
+    padding: 30px 20px;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(4px);
+  }
+  .cd-unit::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; }
+  .cd-days::before  { background: linear-gradient(90deg, var(--green), var(--cyan)); }
+  .cd-hours::before { background: linear-gradient(90deg, var(--blue), #7c3aed); }
+  .cd-mins::before  { background: linear-gradient(90deg, var(--red), var(--yellow)); }
+  .cd-secs::before  { background: linear-gradient(90deg, var(--yellow), var(--red)); }
+  .cd-num {
+    font-family: 'Orbitron', monospace;
+    font-size: 3rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--cyan), var(--blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .cd-label { font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; opacity: 0.8; color: rgba(255,235,205,0.9); }
+
+  /* TRANSIZIONE VERSO GALASSIA */
+  .galaxy-transition-top {
+    height: 150px;
+    background: linear-gradient(180deg, #b98758, #0a0f2a);
+    position: relative;
+    z-index: 2;
+    margin-bottom: -1px;
+  }
+
+  /* SEZIONE GALASSIA */
+  .galaxy-section {
+    background: radial-gradient(ellipse at 30% 40%, #0a0a1a, #020208);
+    position: relative;
+    overflow: hidden;
+    color: white;
+  }
+  .star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    opacity: 0;
+    animation: twinkle 3s infinite alternate;
+    pointer-events: none;
+  }
+  @keyframes twinkle {
+    0% { opacity: 0; transform: scale(0.8); }
+    100% { opacity: 1; transform: scale(1.2); }
+  }
+  .floating-stars {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .profiles-grid {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    flex-wrap: wrap;
+    margin-top: 80px;
+    margin-bottom: 100px;
+    position: relative;
+    z-index: 5;
+  }
+  .profile-card {
+    background: rgba(10, 15, 30, 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 48px;
+    width: 320px;
+    height: 460px;
+    padding: 40px 25px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    transform-style: preserve-3d;
+    transition: transform 0.2s ease-out;
+  }
+  .profile-card:hover {
+    background: rgba(80, 100, 160, 0.7);
+    border-color: #5865F2;
+    box-shadow: 0 20px 35px rgba(0,0,0,0.6);
+  }
+  .profile-name {
+    font-family: 'Boogaloo', cursive;
+    font-size: 2rem;
+    background: linear-gradient(135deg, #fff, #9b87ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 15px;
+  }
+  .profile-role {
+    font-size: 1rem;
+    color: #aaa;
+    letter-spacing: 1px;
+    margin-bottom: 35px;
+  }
+  .profile-btn {
+    background: linear-gradient(135deg, #1e2a3a, #0f1a24);
+    border: 1px solid #5865F2;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-family: 'Orbitron', monospace;
+    font-size: 0.8rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    display: inline-block;
+    margin-top: 20px;
+    cursor: pointer;
+  }
+  .profile-btn:hover {
+    transform: scale(1.05);
+    background: #5865F2;
+    box-shadow: 0 0 15px #5865F2;
+    border-color: white;
+  }
+
+  /* FOOTER SEMPLICE */
+  footer {
+    background: #0a0f2a;
+    text-align: center;
+    padding: 30px;
+    color: #888;
+    border-top: 1px solid #2a2f4a;
+    position: relative;
+    z-index: 2;
+  }
+  .footer-copy { font-size: 0.7rem; opacity: 0.5; }
+
+  @keyframes fadeInUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  .observe { opacity: 0; transform: translateY(40px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .observe.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 768px) {
+    nav { top: 10px; padding: 10px 14px; gap: 14px; }
+    .nav-links { display: none; }
+    section { padding: 60px 20px; }
+    .map-showcase { grid-template-columns: 1fr; }
+    .events-banner { padding: 30px; }
+    .coins-grid { grid-template-columns: 1fr; }
+    .profile-card { width: 260px; height: 400px; padding: 30px 20px; }
+    .profile-name { font-size: 1.6rem; }
+    .hero-buttons { flex-direction: column; align-items: center; }
+  }
+</style>
+</head>
+<body>
+
+<div id="particles"></div>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="nav-logo">
+    <span class="nl-i">I</span><span class="nl-t">T</span><span class="nl-a">A</span><span class="nl-l">L</span><span class="nl-ia2">I</span><span class="nl-n">AN</span><span class="nl-sp"> </span><span class="nl-f">F</span><span class="nl-le">L</span><span class="nl-lx">E</span><span class="nl-f">X</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#hero">Home</a></li>
+    <li><a href="#minigames">Minigames</a></li>
+    <li><a href="#coins">Monete</a></li>
+    <li><a href="#gamepasses">Gamepass</a></li>
+    <li><a href="#mappa">Mappa</a></li>
+    <li><a href="#eventi">Eventi</a></li>
+    <li><a href="#countdown" class="nav-cta">🚀 13/06/2026</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-sky"></div>
+  <div class="cloud c1"></div>
+  <div class="cloud c2"></div>
+  <div class="cloud c3"></div>
+  <div class="hero-bubbles" id="heroBubbles"></div>
+
+  <h1 class="hero-title" data-tilt>
+    <span class="line1 title-stroke">
+      <span class="t-i">I</span><span class="t-t">T</span><span class="t-a">A</span><span class="t-l">L</span><span class="t-ia">I</span><span class="t-n">A</span><span style="color:#fff">N</span>
+    </span>
+    <span class="line2 title-stroke">
+      <span class="t-f">F</span><span class="t-le">L</span><span class="t-lx">E</span><span class="t-f">X</span>
+    </span>
+  </h1>
+
+  <div class="hero-date-badge">
+    <span class="pin">📌</span>
+    IN ARRIVO IL 13 GIUGNO 2026
+    <span class="pin">🔥</span>
+  </div>
+
+  <div class="hero-buttons">
+    <button type="button" class="btn-roblox" onclick="window.open('https://www.roblox.com/share/g/697146720', '_blank')">
+      <img src="https://cdn.simpleicons.org/roblox/FFFFFF" alt="Roblox logo"> GIOCA ORA
+    </button>
+    <button type="button" class="btn-discord" onclick="window.open('https://discord.gg/ZmNjwx4y8z', '_blank')">
+      <img src="https://cdn.simpleicons.org/discord/FFFFFF" alt="Discord logo"> JOIN SERVER
+    </button>
+  </div>
+
+  <div class="hero-ocean">
+    <svg viewBox="0 0 1440 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,100 C180,160 360,40 540,100 C720,160 900,40 1080,100 C1260,160 1350,80 1440,100 L1440,200 L0,200 Z" fill="rgba(26,120,200,0.55)"/>
+      <path d="M0,120 C150,80 300,160 450,120 C600,80 750,160 900,120 C1050,80 1200,160 1440,120 L1440,200 L0,200 Z" fill="rgba(20,90,160,0.65)"/>
+      <path d="M0,140 C200,110 400,170 600,140 C800,110 1000,170 1200,140 C1300,125 1370,150 1440,140 L1440,200 L0,200 Z" fill="rgba(14,74,122,0.85)"/>
+    </svg>
+  </div>
+</section>
+
+<!-- MINIGAMES -->
+<section id="minigames">
+  <div class="container">
+    <p class="section-label">🎮 Attività</p>
+    <h2 class="section-title">I <span style="color:var(--blue)">Minigames</span></h2>
+    <div class="section-divider"></div>
+    <div class="cards-grid">
+      <div class="card card-red observe">
+        <span class="card-tag tag-red">Minigame</span>
+        <h3>Pizza Run</h3>
+      </div>
+      <div class="card card-blue observe">
+        <span class="card-tag tag-blue">Minigame</span>
+        <h3>Piazza Pulita</h3>
+      </div>
+      <div class="card card-yellow observe">
+        <span class="card-tag tag-yellow">Minigame</span>
+        <h3>Mongolfiera al Limite</h3>
+      </div>
+      <div class="card mystery-card observe">
+        <span class="card-tag tag-secret">Segreto</span>
+        <h3>Minigame ???</h3>
+      </div>
+      <div class="card mystery-card observe">
+        <span class="card-tag tag-secret">Segreto</span>
+        <h3>Minigame ???</h3>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="marine-divider" aria-hidden="true">
+  <svg class="wave-top" viewBox="0 0 1440 160" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,82 C160,126 320,38 480,82 C640,126 800,38 960,82 C1120,126 1280,38 1440,82 L1440,160 L0,160 Z" fill="rgba(148,225,255,0.22)"/>
+  </svg>
+  <svg class="wave-mid" viewBox="0 0 1440 160" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,94 C180,48 360,140 540,94 C720,48 900,140 1080,94 C1260,48 1350,126 1440,94 L1440,160 L0,160 Z" fill="rgba(118,208,245,0.32)"/>
+  </svg>
+  <svg viewBox="0 0 1440 160" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,110 C170,66 340,148 510,110 C680,66 850,148 1020,110 C1190,66 1320,136 1440,110 L1440,160 L0,160 Z" fill="rgba(88,176,224,0.4)"/>
+  </svg>
+</div>
+
+<!-- GAMEPASSES -->
+<section id="gamepasses">
+  <div class="container">
+    <p class="section-label">👑 Potenziamenti</p>
+    <h2 class="section-title">Game<span style="color:var(--gold)">pass</span></h2>
+    <div class="section-divider"></div>
+    <div class="gp-grid">
+      <div class="gp-item gp-vip observe">
+        <span class="gp-icon">👑</span>
+        <div class="gp-name">VIP</div>
+      </div>
+      <div class="gp-item observe">
+        <span class="gp-icon">💨</span>
+        <div class="gp-name">SpeedCoil</div>
+      </div>
+      <div class="gp-item observe">
+        <span class="gp-icon">🦘</span>
+        <div class="gp-name">JumpCoil</div>
+      </div>
+      <div class="gp-item observe">
+        <span class="gp-icon">🪧</span>
+        <div class="gp-name">Cartello</div>
+      </div>
+      <div class="gp-item observe">
+        <span class="gp-icon">🗿</span>
+        <div class="gp-name">Statua</div>
+      </div>
+      <div class="gp-item observe">
+        <span class="gp-icon">🧪</span>
+        <div class="gp-name">Pozione Magica</div>
+      </div>
+      <div class="gp-item observe">
+        <span class="gp-icon">🪁</span>
+        <div class="gp-name">Fly</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="marine-divider" aria-hidden="true">
+  <svg class="wave-top" viewBox="0 0 1440 160" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,82 C160,126 320,38 480,82 C640,126 800,38 960,82 C1120,126 1280,38 1440,82 L1440,160 L0,160 Z" fill="rgba(148,225,255,0.22)"/>
+  </svg>
+  <svg class="wave-mid" viewBox="0 0 1440 160" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,94 C180,48 360,140 540,94 C720,48 900,140 1080,94 C1260,48 1350,126 1440,94 L1440,160 L0,160 Z" fill="rgba(118,208,245,0.32)"/>
+  </svg>
+  <svg viewBox="0 0 1440 160" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,110 C170,66 340,148 510,110 C680,66 850,148 1020,110 C1190,66 1320,136 1440,110 L1440,160 L0,160 Z" fill="rgba(88,176,224,0.4)"/>
+  </svg>
+</div>
+
+<!-- COINS -->
+<section id="coins">
+  <div class="container">
+    <p class="section-label">💰 Economia</p>
+    <h2 class="section-title">Le <span style="color:var(--gold)">Monete</span></h2>
+    <div class="section-divider"></div>
+    <div class="coins-grid">
+      <div class="coin-card flex-coins observe">
+        <span class="coin-emoji">🪙</span>
+        <div class="coin-name">Flex Coins</div>
+        <div class="coin-desc">La valuta principale di Italian Flex. Guadagnale giocando!</div>
+      </div>
+      <div class="coin-card social-credits observe">
+        <span class="coin-emoji">⭐</span>
+        <div class="coin-name">Social Credits</div>
+        <div class="coin-desc">Guadagna reputazione interagendo con gli altri giocatori.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="marine-divider" aria-hidden="true">
+  <svg class="wave-top" viewBox="0 0 1440 160" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,82 C160,126 320,38 480,82 C640,126 800,38 960,82 C1120,126 1280,38 1440,82 L1440,160 L0,160 Z" fill="rgba(148,225,255,0.22)"/>
+  </svg>
+  <svg class="wave-mid" viewBox="0 0 1440 160" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,94 C180,48 360,140 540,94 C720,48 900,140 1080,94 C1260,48 1350,126 1440,94 L1440,160 L0,160 Z" fill="rgba(118,208,245,0.32)"/>
+  </svg>
+  <svg viewBox="0 0 1440 160" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,110 C170,66 340,148 510,110 C680,66 850,148 1020,110 C1190,66 1320,136 1440,110 L1440,160 L0,160 Z" fill="rgba(88,176,224,0.4)"/>
+  </svg>
+</div>
+
+<!-- MAPPA -->
+<section id="mappa">
+  <div class="container">
+    <p class="section-label">🗺️ Esplorazione</p>
+    <h2 class="section-title">La <span style="color:var(--green)">Mappa</span></h2>
+    <div class="section-divider"></div>
+    <div class="map-showcase">
+      <div class="map-visual observe" data-tilt>
+        <img id="mapImg" alt="Italian Flex Map" src="https://i.ibb.co/ZR259LgP/Screenshot-2026-04-14-225046.png"/>
+        <div class="map-visual-overlay"></div>
+      </div>
+      <div class="observe">
+        <ul class="map-features">
+          <li><div class="feat-icon fi-yellow">🏠</div><div><strong>Villa Esclusiva</strong><br><span style="opacity:0.55;font-size:0.85rem">La residenza di lusso al centro della mappa</span></div></li>
+          <li><div class="feat-icon fi-blue">🏘️</div><div><strong>Case Accessibili e Non</strong><br><span style="opacity:0.55;font-size:0.85rem">Esplora edifici diversi sparsi per la mappa</span></div></li>
+          <li><div class="feat-icon fi-green">🌊</div><div><strong>Strutture Speciali</strong><br><span style="opacity:0.55;font-size:0.85rem">Luoghi unici e segreti da scoprire</span></div></li>
+          <li><div class="feat-icon fi-red">🎉</div><div><strong>Zone Evento</strong><br><span style="opacity:0.55;font-size:0.85rem">Aree dedicate agli eventi speciali</span></div></li>
+          <li><div class="feat-icon fi-purple">🔮</div><div><strong>E molte altre sorprese...</strong><br><span style="opacity:0.55;font-size:0.85rem">Da scoprire il 13 giugno 2026!</span></div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="shore-divider" aria-hidden="true">
+  <svg class="wave-back" viewBox="0 0 1440 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,108 C160,156 320,60 480,108 C640,156 800,60 960,108 C1120,156 1280,60 1440,108 L1440,200 L0,200 Z" fill="rgba(255,255,255,0.48)"/>
+  </svg>
+  <svg viewBox="0 0 1440 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,124 C180,70 360,168 540,124 C720,70 900,168 1080,124 C1260,70 1350,152 1440,124 L1440,200 L0,200 Z" fill="rgba(255,255,255,0.72)"/>
+  </svg>
+</div>
+
+<!-- EVENTI (con impronte, scuriti, senza emoji) -->
+<section id="eventi">
+  <div class="beach-cursor-layer" id="beachCursorLayerEvents"></div>
+  <div class="container">
+    <h2 class="section-title">Gli Eventi</h2>
+    <div class="section-divider"></div>
+    <div class="events-banner observe">
+      <h2>Ogni Weekend</h2>
+      <p>Ogni sabato o domenica (alternati) ci saranno eventi speciali in tutta la mappa. Tieniti pronto per mini eventi a sorpresa sparsi ovunque — nessuna settimana sarà uguale all'altra!</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap; justify-content:center; margin-top:20px">
+        <span style="background:rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.3);color:#f87171;padding:5px 14px;border-radius:20px;font-size:0.8rem;font-weight:700">Eventi Principali</span>
+        <span style="background:rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.3);color:#60a5fa;padding:5px 14px;border-radius:20px;font-size:0.8rem;font-weight:700">Mini-eventi</span>
+        <span style="background:rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.3);color:#4ade80;padding:5px 14px;border-radius:20px;font-size:0.8rem;font-weight:700">Sorprese</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COUNTDOWN (scurito) -->
+<section id="countdown">
+  <div class="beach-cursor-layer" id="beachCursorLayerCountdown"></div>
+  <div class="container">
+    <h2 class="countdown-title">🚀 Il lancio si avvicina</h2>
+    <p class="countdown-sub">Mancano ancora...</p>
+    <div class="countdown-grid">
+      <div class="cd-unit cd-days"><div class="cd-num" id="cd-days">00</div><div class="cd-label">Giorni</div></div>
+      <div class="cd-unit cd-hours"><div class="cd-num" id="cd-hours">00</div><div class="cd-label">Ore</div></div>
+      <div class="cd-unit cd-mins"><div class="cd-num" id="cd-mins">00</div><div class="cd-label">Minuti</div></div>
+      <div class="cd-unit cd-secs"><div class="cd-num" id="cd-secs">00</div><div class="cd-label">Secondi</div></div>
+    </div>
+    <br><br>
+    <p style="opacity:0.7;font-size:0.8rem;letter-spacing:2px">13 GIUGNO 2026 · ITALIAN FLEX · ROBLOX</p>
+  </div>
+</section>
+
+<!-- TRANSIZIONE VERSO GALASSIA -->
+<div class="galaxy-transition-top"></div>
+
+<!-- SEZIONE GALASSIA -->
+<section class="galaxy-section" id="galaxy">
+  <div class="floating-stars" id="starsContainer"></div>
+  <div class="container" style="position: relative; z-index: 10; text-align: center; padding: 80px 20px;">
+    <div class="profiles-grid">
+      <div class="profile-card" data-tilt-card>
+        <div>
+          <div class="profile-name">itznotdream</div>
+          <div class="profile-role">⚡ Game Dev</div>
+        </div>
+        <button class="profile-btn" onclick="window.open('https://guns.lol/itznotdream', '_blank')">VISITA GUNS.LOL</button>
+      </div>
+      <div class="profile-card" data-tilt-card>
+        <div>
+          <div class="profile-name">𝓕𝓻𝔂𝔃𝓓𝓮𝔁</div>
+          <div class="profile-role">🛠️ Game Dev</div>
+        </div>
+        <button class="profile-btn" onclick="window.open('https://guns.lol/fryzdevx', '_blank')">VISITA GUNS.LOL</button>
+      </div>
+      <div class="profile-card" data-tilt-card>
+        <div>
+          <div class="profile-name">𝖊𝖝𝖔𝖙𝖎𝖈</div>
+          <div class="profile-role">🌐 Website Dev</div>
+        </div>
+        <button class="profile-btn" onclick="window.open('https://guns.lol/javraj', '_blank')">VISITA GUNS.LOL</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p class="footer-copy">© 2026 Italian Flex</p>
+</footer>
+
+<script>
+  // PARTICLES
+  const particlesEl = document.getElementById('particles');
+  const colors = ['#009246','#ce2b37','#1a8fe3','#f5c518','#00ffe7','rgba(255,255,255,0.5)'];
+  for (let i = 0; i < 40; i++) {
+    const p = document.createElement('div');
+    p.classList.add('particle');
+    const size = Math.random() * 5 + 2;
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    p.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*100}%;background:${color};animation-duration:${Math.random()*18+10}s;animation-delay:-${Math.random()*18}s;box-shadow:0 0 ${size*2}px ${color};`;
+    particlesEl.appendChild(p);
+  }
+
+  // SCROLL REVEAL
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 80);
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.observe').forEach(el => observer.observe(el));
+
+  // 3D TILT per mappa e titolo
+  document.querySelectorAll('[data-tilt]').forEach((el) => {
+    const strength = el.classList.contains('hero-title') ? 18 : 14;
+    el.addEventListener('mousemove', (event) => {
+      const rect = el.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width - 0.5;
+      const y = (event.clientY - rect.top) / rect.height - 0.5;
+      const rotateX = -(y * strength);
+      const rotateY = x * strength;
+      el.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px)`;
+    });
+    el.addEventListener('mouseleave', () => {
+      el.style.transform = '';
+    });
+  });
+
+  // EFFETTO TITOLO 3D
+  const heroTitle = document.querySelector('.hero-title');
+  if (heroTitle) {
+    heroTitle.addEventListener('mousemove', (e) => {
+      const rect = heroTitle.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      heroTitle.style.transform = `perspective(1000px) rotateX(${-y * 8}deg) rotateY(${x * 12}deg) translateZ(15px)`;
+    });
+    heroTitle.addEventListener('mouseleave', () => {
+      heroTitle.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+    });
+  }
+
+  // EFFETTO 3D per le card della galassia
+  document.querySelectorAll('[data-tilt-card]').forEach((card) => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      const rotateY = x * 15;
+      const rotateX = -y * 15;
+      card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(20px)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+    });
+  });
+
+  // STELLE ANIMATE
+  const starsContainer = document.getElementById('starsContainer');
+  for (let i = 0; i < 300; i++) {
+    let star = document.createElement('div');
+    star.classList.add('star');
+    let size = 1 + Math.random() * 4;
+    star.style.width = size + 'px';
+    star.style.height = size + 'px';
+    star.style.left = Math.random() * 100 + '%';
+    star.style.top = Math.random() * 100 + '%';
+    star.style.animationDelay = Math.random() * 6 + 's';
+    star.style.animationDuration = 1 + Math.random() * 4 + 's';
+    starsContainer.appendChild(star);
+  }
+
+  // IMPRONTE SULLA SPIAGGIA (eventi e countdown)
+  function setupFootprints(sectionId) {
+    const section = document.getElementById(sectionId);
+    if (!section) return;
+    let layer = section.querySelector('.beach-cursor-layer');
+    if (!layer) {
+      layer = document.createElement('div');
+      layer.className = 'beach-cursor-layer';
+      section.prepend(layer);
+    }
+    let lastFootprint = 0;
+    let leftStep = true;
+    section.addEventListener('mousemove', (event) => {
+      const now = Date.now();
+      if (now - lastFootprint < 70) return;
+      lastFootprint = now;
+      const rect = section.getBoundingClientRect();
+      const footprint = document.createElement('span');
+      footprint.className = 'footprint';
+      const x = event.clientX - rect.left + (leftStep ? -10 : 10);
+      const y = event.clientY - rect.top + (leftStep ? 6 : -6);
+      footprint.style.left = `${x}px`;
+      footprint.style.top = `${y}px`;
+      footprint.style.transform = `rotate(${leftStep ? -18 : 18}deg)`;
+      leftStep = !leftStep;
+      layer.appendChild(footprint);
+      setTimeout(() => footprint.remove(), 5000);
+    });
+  }
+  setupFootprints('eventi');
+  setupFootprints('countdown');
+
+   // COUNTDOWN
+  function updateCountdown() {
+    const diff = new Date('2026-06-13T00:00:00').getTime() - Date.now();
+    if (diff <= 0) { ['cd-days','cd-hours','cd-mins','cd-secs'].forEach(id => document.getElementById(id).textContent = '00'); return; }
+    document.getElementById('cd-days').textContent  = String(Math.floor(diff/86400000)).padStart(2,'0');
+    document.getElementById('cd-hours').textContent = String(Math.floor((diff%86400000)/3600000)).padStart(2,'0');
+    document.getElementById('cd-mins').textContent  = String(Math.floor((diff%3600000)/60000)).padStart(2,'0');
+    document.getElementById('cd-secs').textContent  = String(Math.floor((diff%60000)/1000)).padStart(2,'0');
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // ========== CONTATORE GLOBALE CON BACKEND ==========
+  // DICHIARO PRIMA LA FUNZIONE FALLBACK
+  function fallbackLocalCounter() {
+    let count = localStorage.getItem('fallbackCounter');
+    if (!count) {
+      count = Math.floor(Math.random() * 2000) + 1000;
+    } else {
+      count = parseInt(count) + 1;
+    }
+    localStorage.setItem('fallbackCounter', count);
+    const counterElement = document.getElementById('visitorCount');
+    if (counterElement) {
+      counterElement.textContent = count.toLocaleString('it-IT');
+    }
+  }
+
+  // POI LA FUNZIONE PRINCIPALE
+  async function updateGlobalCounter() {
+    try {
+      // ⚠️ QUANDO FARAI IL DEPLOY, CAMBIA QUESTO URL!
+      // Per ora in locale: '/api/visitors/increment'
+      // Dopo il deploy su Render: 'https://tuo-sito.onrender.com/api/visitors/increment'
+      const incrementRes = await fetch('/api/visitors/increment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+      });
+      
+      if (!incrementRes.ok) throw new Error('Increment failed');
+      const incrementData = await incrementRes.json();
+      
+      const counterElement = document.getElementById('visitorCount');
+      if (counterElement) {
+        counterElement.textContent = incrementData.count.toLocaleString('it-IT');
+      }
+      
+      console.log('👁️ Visita registrata:', incrementData.count);
+    } catch (error) {
+      console.error('Errore contatore:', error);
+      fallbackLocalCounter();
+    }
+  }
+
+  // AVVIA IL CONTATORE
+  document.addEventListener('DOMContentLoaded', () => {
+    updateGlobalCounter();
+  });
+</script>
+</body>
+</html>
