@@ -90,7 +90,7 @@ nav {
   left: 50%;
   transform: translateX(-50%);
   z-index: 100;
-  width: min(750px, calc(100% - 24px)); /* MENO LARGA (era 900-1180px) */
+  width: min(750px, calc(100% - 24px));
   padding: 10px 18px;
   min-height: 64px;
   display: flex;
@@ -399,29 +399,82 @@ nav {
     to { transform: translateX(-50%); }
   }
 
-  /* TITLE */
-  .hero-title {
-    font-family: 'Boogaloo', cursive;
-    font-size: clamp(5rem, 14vw, 12rem);
-    line-height: 0.9;
-    letter-spacing: -2px;
-    margin-bottom: 10px;
-    animation: fadeInUp 1s ease 0.3s both;
+  /* ===== LOGO ANIMATO 3D CON SCIA E MOUSE TRACKING ===== */
+  .hero-logo-container {
     position: relative;
-    transform-style: preserve-3d;
-    transition: transform 0.18s ease-out;
-    text-shadow: 0 18px 40px rgba(4,15,30,0.28);
+    display: inline-block;
+    margin-bottom: 30px;
+    filter: drop-shadow(0 0 15px rgba(0, 255, 255, 0.5));
+    animation: floatLogo 4s ease-in-out infinite;
+    perspective: 800px;
+    cursor: pointer;
   }
-  .title-stroke { -webkit-text-stroke: 3px rgba(0,0,0,0.4); }
-  .t-i { color: var(--green); }
-  .t-t { color: #fff; }
-  .t-a { color: var(--red); }
-  .t-l { color: var(--yellow); }
-  .t-ia { color: var(--blue); }
-  .t-n { color: var(--green); }
-  .t-f { color: var(--blue); text-shadow: 0 0 40px rgba(26,143,227,0.9); }
-  .t-le { color: var(--yellow); text-shadow: 0 0 40px rgba(245,197,24,0.9); }
-  .t-lx { color: var(--red); text-shadow: 0 0 40px rgba(206,43,55,0.9); }
+
+  .hero-logo-img {
+    display: block;
+    width: 200px;
+    max-width: 35vw;
+    height: auto;
+    transition: transform 0.1s ease-out;
+    will-change: transform;
+    filter: drop-shadow(0 0 8px rgba(255,255,255,0.8));
+  }
+
+  /* Scia luminosa */
+  .light-trail {
+    position: absolute;
+    top: 10%;
+    left: -30%;
+    width: 160%;
+    height: 80%;
+    background: linear-gradient(90deg, 
+      transparent, 
+      rgba(255, 255, 255, 0.7), 
+      rgba(0, 255, 255, 0.9), 
+      rgba(255, 255, 255, 0.7), 
+      transparent);
+    filter: blur(12px);
+    opacity: 0;
+    transform: skewX(-20deg);
+    pointer-events: none;
+    z-index: -1;
+    animation: trailMove 5s linear infinite;
+  }
+
+  /* Fluttuazione */
+  @keyframes floatLogo {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(2deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
+  }
+
+  /* Movimento scia */
+  @keyframes trailMove {
+    0% { left: -50%; opacity: 0; }
+    20% { opacity: 0.8; }
+    80% { opacity: 0.8; }
+    100% { left: 100%; opacity: 0; }
+  }
+
+  /* Riflesso speculare sotto */
+  .hero-logo-container::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: 10%;
+    width: 80%;
+    height: 30px;
+    background: radial-gradient(ellipse, rgba(255,255,255,0.4), transparent 70%);
+    filter: blur(8px);
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: reflectionPulse 3s ease-in-out infinite;
+  }
+
+  @keyframes reflectionPulse {
+    0%, 100% { opacity: 0.3; transform: scaleX(0.8); }
+    50% { opacity: 0.8; transform: scaleX(1.1); }
+  }
 
   .hero-date-badge {
     display: inline-flex;
@@ -949,7 +1002,7 @@ nav {
   backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 32px;
-  width: 280px; /* Larghezza fissa per uniformità */
+  width: 280px;
   padding: 30px 20px;
   text-align: center;
   transition: all 0.3s ease;
@@ -1036,89 +1089,6 @@ nav {
   .observe { opacity: 0; transform: translateY(40px); transition: opacity 0.7s ease, transform 0.7s ease; }
   .observe.visible { opacity: 1; transform: translateY(0); }
 
-/* ====== TITOLO 3D OLOGRAFICO ====== */
-.hologram-title {
-  animation: hologramFloat 3s ease-in-out infinite;
-  transform-style: preserve-3d;
-}
-
-.hologram-title .line1 span,
-.hologram-title .line2 span {
-  display: inline-block;
-  animation: hologramLetter 2s ease-in-out infinite;
-  animation-delay: calc(var(--i) * 0.08s);
-}
-
-/* Colori originali + effetto glow */
-.hologram-title .t-i,
-.hologram-title .t-a,
-.hologram-title .t-n,
-.hologram-title .t-n-last { 
-  color: var(--green);
-  text-shadow: 0 0 5px #009246, 0 0 10px #009246;
-}
-.hologram-title .t-t { 
-  color: #fff;
-  text-shadow: 0 0 5px #fff, 0 0 10px rgba(255,255,255,0.5);
-}
-.hologram-title .t-l,
-.hologram-title .t-le { 
-  color: var(--yellow);
-  text-shadow: 0 0 5px #f5c518, 0 0 10px #f5c518;
-}
-.hologram-title .t-ia,
-.hologram-title .t-f,
-.hologram-title .t-f-last { 
-  color: var(--blue);
-  text-shadow: 0 0 5px #1a8fe3, 0 0 10px #1a8fe3;
-}
-.hologram-title .t-lx { 
-  color: var(--red);
-  text-shadow: 0 0 5px #ce2b37, 0 0 10px #ce2b37;
-}
-
-/* Indici per animazione sequenziale */
-.hologram-title .line1 span:nth-child(1) { --i: 0; }
-.hologram-title .line1 span:nth-child(2) { --i: 1; }
-.hologram-title .line1 span:nth-child(3) { --i: 2; }
-.hologram-title .line1 span:nth-child(4) { --i: 3; }
-.hologram-title .line1 span:nth-child(5) { --i: 4; }
-.hologram-title .line1 span:nth-child(6) { --i: 5; }
-.hologram-title .line1 span:nth-child(7) { --i: 6; }
-.hologram-title .line2 span:nth-child(1) { --i: 7; }
-.hologram-title .line2 span:nth-child(2) { --i: 8; }
-.hologram-title .line2 span:nth-child(3) { --i: 9; }
-.hologram-title .line2 span:nth-child(4) { --i: 10; }
-
-@keyframes hologramFloat {
-  0%, 100% {
-    transform: perspective(800px) rotateX(0deg) rotateY(0deg) translateZ(0);
-  }
-  50% {
-    transform: perspective(800px) rotateX(4deg) rotateY(4deg) translateZ(20px);
-  }
-}
-
-@keyframes hologramLetter {
-  0%, 100% {
-    transform: translateY(0px) rotate(0deg);
-    filter: drop-shadow(0 0 2px currentColor);
-  }
-  50% {
-    transform: translateY(-6px) rotate(3deg);
-    filter: drop-shadow(0 0 12px currentColor);
-  }
-}
-
-/* Effetto hover più intenso */
-.hologram-title:hover {
-  animation: hologramFloat 1s ease-in-out infinite;
-}
-
-.hologram-title:hover span {
-  animation: hologramLetter 0.4s ease-in-out infinite;
-}
-
   @media (max-width: 768px) {
     nav { top: 10px; padding: 10px 14px; gap: 14px; }
     .nav-links { display: none; }
@@ -1161,6 +1131,7 @@ nav {
     <span class="counter-number" id="visitorCount">0</span>
   </div>
 </nav>
+
 <!-- HERO -->
 <section id="hero">
   <div class="hero-sky"></div>
@@ -1169,14 +1140,11 @@ nav {
   <div class="cloud c3"></div>
   <div class="hero-bubbles" id="heroBubbles"></div>
 
-<h1 class="hero-title hologram-title" data-tilt>
-  <span class="line1">
-    <span class="t-i">I</span><span class="t-t">T</span><span class="t-a">A</span><span class="t-l">L</span><span class="t-ia">I</span><span class="t-n">A</span><span style="color:#fff">N</span>
-  </span>
-  <span class="line2">
-    <span class="t-f">F</span><span class="t-le">L</span><span class="t-lx">E</span><span class="t-f">X</span>
-  </span>
-</h1>
+  <!-- LOGO ANIMATO 3D (al posto del titolo testuale) -->
+  <div class="hero-logo-container" id="heroLogo">
+    <img src="https://i.ibb.co/4nTm4r3H/ab67ade49164324b9392f10d4b5be720.webp" alt="Italian Flex Logo" class="hero-logo-img" id="floatingLogo">
+    <div class="light-trail"></div>
+  </div>
 
   <div class="hero-date-badge">
     <span class="pin">📌</span>
@@ -1450,8 +1418,9 @@ nav {
       SEGUICI SU TIKTOK →
     </button>
   </div>
-</div>    <!-- chiude container -->
-</section>  <!-- chiude galaxy-section -->
+</div>
+  </div>
+</section>
 
 <!-- FOOTER -->
 <footer>
@@ -1480,9 +1449,9 @@ nav {
   }, { threshold: 0.1 });
   document.querySelectorAll('.observe').forEach(el => observer.observe(el));
 
-  // 3D TILT per mappa e titolo
+  // 3D TILT per mappa
   document.querySelectorAll('[data-tilt]').forEach((el) => {
-    const strength = el.classList.contains('hero-title') ? 18 : 14;
+    const strength = 14;
     el.addEventListener('mousemove', (event) => {
       const rect = el.getBoundingClientRect();
       const x = (event.clientX - rect.left) / rect.width - 0.5;
@@ -1496,37 +1465,24 @@ nav {
     });
   });
 
-  // EFFETTO TITOLO 3D
-  const heroTitle = document.querySelector('.hero-title');
-  if (heroTitle) {
-    heroTitle.addEventListener('mousemove', (e) => {
-      const rect = heroTitle.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
-      heroTitle.style.transform = `perspective(1000px) rotateX(${-y * 8}deg) rotateY(${x * 12}deg) translateZ(15px)`;
-    });
-    heroTitle.addEventListener('mouseleave', () => {
-      heroTitle.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
-    });
-  }
-
   // EFFETTO 3D per le card della galassia
   document.querySelectorAll('[data-tilt-card]').forEach((card) => {
     card.addEventListener('mousemove', (e) => {
       const rect = card.getBoundingClientRect();
       const x = (e.clientX - rect.left) / rect.width - 0.5;
       const y = (e.clientY - rect.top) / rect.height - 0.5;
-   // Rotazione: massimo 20 gradi (invece di 15 per più movimento)
-    const rotateY = x * 40;
-    const rotateX = -y * 40;
-
-    // Leggero spostamento laterale (translate) per più effetto 3D
-    const translateX = x * 16;
-    const translateY = y * 16;
-      card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(20px)`;
+      const rotateY = x * 40;
+      const rotateX = -y * 40;
+      const translateX = x * 16;
+      const translateY = y * 16;
+      card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateX(${translateX}px) translateY(${translateY}px) translateZ(20px)`;
     });
     card.addEventListener('mouseleave', () => {
-      card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+      card.style.transition = 'transform 0.3s ease-out';
+      card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) translateX(0px) translateY(0px) translateZ(0px)';
+      setTimeout(() => {
+        card.style.transition = '';
+      }, 300);
     });
   });
 
@@ -1588,6 +1544,37 @@ nav {
   }
   updateCountdown();
   setInterval(updateCountdown, 1000);
+
+  // === LOGO 3D CHE SEGUE IL MOUSE ===
+  const logo = document.getElementById('floatingLogo');
+  const logoContainer = document.getElementById('heroLogo');
+
+  if (logo && logoContainer) {
+    logoContainer.addEventListener('mousemove', (e) => {
+      const rect = logoContainer.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      
+      const moveX = (e.clientX - centerX) / (rect.width / 2);
+      const moveY = (e.clientY - centerY) / (rect.height / 2);
+      
+      const distance = Math.sqrt(moveX * moveX + moveY * moveY);
+      if (distance < 1.2) {
+        const rotateY = moveX * 15;
+        const rotateX = -moveY * 15;
+        logo.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(15px)`;
+        logo.style.transition = 'transform 0.05s linear';
+      } else {
+        logo.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+        logo.style.transition = 'transform 0.3s ease-out';
+      }
+    });
+    
+    logoContainer.addEventListener('mouseleave', () => {
+      logo.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+      logo.style.transition = 'transform 0.4s ease-out';
+    });
+  }
 
   // CONTATORE GLOBALE CON BACKEND
   function fallbackLocalCounter() {
