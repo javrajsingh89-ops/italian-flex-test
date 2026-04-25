@@ -1331,10 +1331,10 @@
       // ⚠️ QUANDO FARAI IL DEPLOY, CAMBIA QUESTO URL!
       // Per ora in locale: '/api/visitors/increment'
       // Dopo il deploy su Render: 'https://tuo-sito.onrender.com/api/visitors/increment'
-      const incrementRes = await fetch('/api/visitors/increment', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' }
-      });
+      const incrementRes = await fetch('https://italian-flex-test.onrender.com/api/visitors/increment', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' }
+});
       
       if (!incrementRes.ok) throw new Error('Increment failed');
       const incrementData = await incrementRes.json();
