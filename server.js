@@ -23,19 +23,22 @@ db.run(`
   )
 `);
 
-// Inizializza il contatore se vuoto
+// Inizializza il contatore se vuoto (con numero casuale tra 500 e 2000)
 db.get("SELECT COUNT(*) as count FROM visitors", (err, row) => {
   if (err) {
-    console.error('Errore database:', err);
+    console.error('❌ Errore database:', err);
     return;
   }
   if (row.count === 0) {
-    db.run("INSERT INTO visitors (count) VALUES (?)", [Math.floor(Math.random() * 500) + 1000]);
-    console.log('✅ Contatore inizializzato');
+    const initialCount = Math.floor(Math.random() * 1500) + 500;
+    db.run("INSERT INTO visitors (count) VALUES (?)", [initialCount]);
+    console.log(`✅ Contatore inizializzato a ${initialCount} visite`);
+  } else {
+    console.log('✅ Database già esistente');
   }
 });
 
-// ============ API ============
+// ============ API ROUTES ============
 
 // 1. GET - Legge il contatore attuale
 app.get('/api/visitors', (req, res) => {
@@ -64,6 +67,7 @@ app.post('/api/visitors/increment', (req, res) => {
     // Leggi il nuovo valore
     db.get("SELECT count FROM visitors LIMIT 1", (err, row) => {
       if (err) {
+        console.error('Errore lettura post-update:', err);
         return res.status(500).json({ error: 'Read failed' });
       }
       res.json({ 
@@ -78,18 +82,35 @@ app.post('/api/visitors/increment', (req, res) => {
 // 3. (Opzionale) RESET - Solo per admin (proteggi con chiave)
 app.post('/api/visitors/reset', (req, res) => {
   const adminKey = req.headers['x-admin-key'];
-  if (adminKey !== 'TUACHAVESEGRETA123') {  // Cambia questa chiave!
+  if (adminKey !== 'ItalianFlexAdmin2026') {
     return res.status(403).json({ error: 'Unauthorized' });
   }
   
   db.run("UPDATE visitors SET count = 0", (err) => {
-    if (err) return res.status(500).json({ error: 'Reset failed' });
+    if (err) {
+      console.error('Errore reset:', err);
+      return res.status(500).json({ error: 'Reset failed' });
+    }
     res.json({ success: true, message: 'Contatore resettato' });
   });
 });
 
-// Avvia il server
+// ============ SERVIRE IL FRONTEND ============
+
+// Rotta per la home page
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// Per qualsiasi altra rotta, restituisci index.html (per supportare routing frontend)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// ============ AVVIA IL SERVER ============
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
+  console.log(`\n🚀 Server avviato con successo!`);
+  console.log(`📍 URL locale: http://localhost:${PORT}`);
   console.log(`📊 API endpoint: http://localhost:${PORT}/api/visitors`);
+  console.log(`👁️  Contatore visite attivo\n`);
 });
