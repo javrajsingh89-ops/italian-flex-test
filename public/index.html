@@ -1396,7 +1396,7 @@ nav {
 
   // 3D TILT per mappa
   document.querySelectorAll('[data-tilt]').forEach((el) => {
-    const strength = 14;
+    const strength = 25;
     el.addEventListener('mousemove', (event) => {
       const rect = el.getBoundingClientRect();
       const x = (event.clientX - rect.left) / rect.width - 0.5;
@@ -1504,7 +1504,7 @@ nav {
       const moveY = (e.clientY - centerY) / (rect.height / 2);
       
       const distance = Math.sqrt(moveX * moveX + moveY * moveY);
-      if (distance < 5) {
+      if (distance < 17) {
         const rotateY = moveX * 15;
         const rotateX = -moveY * 15;
         logo.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(15px)`;
