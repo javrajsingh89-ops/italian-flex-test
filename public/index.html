@@ -83,25 +83,25 @@
   }
   #ocean-floor svg { width: 100%; height: 100%; }
 
- /* ====== NAV — liquid glass pill (SOLO ICONE) ====== */
+ /* ====== NAV — liquid glass pill (SOLO ICONE, RIDOTTA) ====== */
 nav {
   position: fixed;
-  top: 16px;
+  top: 12px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 100;
-  width: min(900px, calc(100% - 24px));
-  padding: 8px 16px;
-  min-height: 56px;
+  width: min(750px, calc(100% - 20px));
+  padding: 6px 12px;
+  min-height: 48px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 8px;
   background: rgba(255,255,255,0.08);
   backdrop-filter: blur(28px) saturate(180%);
   -webkit-backdrop-filter: blur(28px) saturate(180%);
   border: 1px solid rgba(255,255,255,0.18);
-  border-radius: 100px;
+  border-radius: 60px;
   box-shadow: 0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2);
   animation: slideDown 0.8s ease;
   white-space: nowrap;
@@ -112,7 +112,7 @@ nav {
   to { transform: translateX(-50%) translateY(0); opacity: 1; } 
 }
 
-/* Logo solo icona (senza testo) */
+/* Logo */
 .nav-logo {
   display: flex;
   align-items: center;
@@ -120,15 +120,15 @@ nav {
 }
 
 .nav-logo-img {
-  width: 36px;
-  height: 36px;
+  width: 28px;
+  height: 28px;
   object-fit: contain;
 }
 
 /* Link con solo icone */
 .nav-links {
   display: flex;
-  gap: 6px;
+  gap: 4px;
   list-style: none;
   align-items: center;
   margin: 0;
@@ -139,11 +139,11 @@ nav {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   padding: 0;
   border-radius: 50%;
-  transition: all 0.25s;
+  transition: all 0.2s;
   background: rgba(255,255,255,0.05);
   border: 1px solid transparent;
   text-decoration: none;
@@ -152,12 +152,12 @@ nav {
 .nav-links a:hover {
   background: rgba(255,255,255,0.15);
   border-color: rgba(255,255,255,0.2);
-  transform: translateY(-2px);
+  transform: translateY(-1px);
 }
 
 .nav-icon {
-  width: 22px;
-  height: 22px;
+  width: 16px;
+  height: 16px;
   filter: brightness(0) invert(1);
   transition: filter 0.2s;
 }
@@ -166,28 +166,28 @@ nav {
   filter: brightness(0) invert(0.9);
 }
 
-/* Bottone speciale 🚀 (solo icona) */
+/* Bottone 🚀 */
 .nav-cta {
   background: linear-gradient(135deg, #fff6bf 0%, #ffd86a 45%, #ff8d4d 100%) !important;
-  font-size: 1.2rem !important;
+  font-size: 1rem !important;
   font-weight: normal !important;
-  box-shadow: 0 8px 20px rgba(255,171,74,0.45);
+  box-shadow: 0 6px 16px rgba(255,171,74,0.45);
   color: #10233f !important;
 }
 
 .nav-cta:hover {
-  transform: translateY(-2px) scale(1.05) !important;
-  box-shadow: 0 12px 28px rgba(255,183,77,0.62) !important;
+  transform: translateY(-1px) scale(1.05) !important;
+  box-shadow: 0 10px 22px rgba(255,183,77,0.62) !important;
 }
 
-/* Contatore visite navbar */
+/* Contatore visite */
 .nav-counter {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   background: rgba(0, 0, 0, 0.35);
-  border-radius: 50px;
-  padding: 4px 12px 4px 8px;
+  border-radius: 40px;
+  padding: 3px 10px 3px 6px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(4px);
   flex-shrink: 0;
@@ -200,8 +200,8 @@ nav {
 }
 
 .eye-icon {
-  width: 18px;
-  height: 18px;
+  width: 14px;
+  height: 14px;
   filter: brightness(0) invert(1);
   opacity: 0.9;
 }
@@ -209,51 +209,55 @@ nav {
 .counter-number {
   font-family: 'Orbitron', monospace;
   font-weight: 900;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   letter-spacing: 1px;
   color: var(--cyan);
   text-shadow: 0 0 4px rgba(0, 255, 231, 0.5);
   background: rgba(0, 0, 0, 0.3);
-  padding: 2px 8px;
+  padding: 2px 6px;
   border-radius: 30px;
-  min-width: 55px;
+  min-width: 45px;
   text-align: center;
 }
 
 /* Responsive mobile */
 @media (max-width: 768px) {
   nav {
-    top: 10px;
-    padding: 6px 12px;
-    width: min(95%, calc(100% - 20px));
-    gap: 8px;
+    top: 8px;
+    padding: 4px 10px;
+    width: min(95%, calc(100% - 16px));
+    gap: 6px;
+    border-radius: 50px;
   }
   .nav-links {
-    gap: 4px;
+    gap: 3px;
   }
   .nav-links a {
-    width: 34px;
-    height: 34px;
-  }
-  .nav-icon {
-    width: 18px;
-    height: 18px;
-  }
-  .nav-logo-img {
     width: 28px;
     height: 28px;
   }
-  .nav-counter {
-    padding: 2px 8px 2px 6px;
-  }
-  .eye-icon {
+  .nav-icon {
     width: 14px;
     height: 14px;
   }
+  .nav-logo-img {
+    width: 22px;
+    height: 22px;
+  }
+  .nav-cta {
+    font-size: 0.9rem !important;
+  }
+  .nav-counter {
+    padding: 2px 8px 2px 5px;
+  }
+  .eye-icon {
+    width: 12px;
+    height: 12px;
+  }
   .counter-number {
-    font-size: 0.7rem;
-    min-width: 45px;
-    padding: 2px 5px;
+    font-size: 0.6rem;
+    min-width: 38px;
+    padding: 1px 4px;
   }
 }
   /* Contatore visite navbar */
