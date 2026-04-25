@@ -48,21 +48,6 @@
     z-index: 0;
   }
 
-  /* PARTICLES (bolle) */
-  #particles { position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
-  .particle {
-    position: absolute;
-    border-radius: 50%;
-    animation: floatUp linear infinite;
-    opacity: 0;
-  }
-  @keyframes floatUp {
-    0%   { transform: translateY(100vh); opacity: 0; }
-    10%  { opacity: 0.6; }
-    90%  { opacity: 0.6; }
-    100% { transform: translateY(-10vh); opacity: 0; }
-  }
-
   /* ====== WAVES ====== */
   .wave-container {
     position: relative;
@@ -292,7 +277,81 @@
     from { transform: translateX(0); }
     to { transform: translateX(-50%); }
   }
+/* ====== NUOVE ONDE REALISTICHE (da aggiungere) ====== */
+.ocean-waves {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 35%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+}
 
+.wave {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 200%;
+  height: 100%;
+  background-repeat: repeat-x;
+  animation: waveMove linear infinite;
+}
+
+.wave1 {
+  background: rgba(26, 120, 200, 0.3);
+  border-radius: 60% 40% 50% 50%;
+  animation-duration: 8s;
+}
+
+.wave2 {
+  background: rgba(20, 90, 150, 0.4);
+  border-radius: 40% 60% 45% 55%;
+  animation-duration: 12s;
+  opacity: 0.7;
+}
+
+.wave3 {
+  background: rgba(10, 60, 110, 0.5);
+  border-radius: 55% 45% 60% 40%;
+  animation-duration: 16s;
+  opacity: 0.5;
+}
+
+@keyframes waveMove {
+  0% { transform: translateX(0) translateY(0); }
+  50% { transform: translateX(-25%) translateY(-5px); }
+  100% { transform: translateX(-50%) translateY(0); }
+}
+
+/* ====== BOLLICINE ====== */
+.bubbles-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 35%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 2;
+}
+
+.bubble {
+  position: absolute;
+  bottom: -30px;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.5), rgba(100,200,255,0.2));
+  border-radius: 50%;
+  animation: bubbleRise linear infinite;
+  box-shadow: 0 0 5px rgba(100,200,255,0.3);
+}
+
+@keyframes bubbleRise {
+  0% { transform: translateY(0) scale(0.8); opacity: 0; }
+  20% { opacity: 0.6; }
+  80% { opacity: 0.4; }
+  100% { transform: translateY(-100vh) scale(1.2); opacity: 0; }
+}
   /* TITLE */
   .hero-title {
     font-family: 'Boogaloo', cursive;
@@ -944,12 +1003,104 @@
     .profile-name { font-size: 1.6rem; }
     .hero-buttons { flex-direction: column; align-items: center; }
   }
+  /* ====== ONDE REALISTICHE NEL MARE ====== */
+.hero-ocean {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 35%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.ocean-waves {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.wave {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 200%;
+  height: 100%;
+  background-repeat: repeat-x;
+  animation: waveMove linear infinite;
+}
+
+.wave1 {
+  background: rgba(26, 120, 200, 0.4);
+  border-radius: 60% 40% 50% 50%;
+  animation-duration: 8s;
+}
+
+.wave2 {
+  background: rgba(20, 90, 150, 0.5);
+  border-radius: 40% 60% 45% 55%;
+  animation-duration: 12s;
+  opacity: 0.7;
+}
+
+.wave3 {
+  background: rgba(10, 60, 110, 0.6);
+  border-radius: 55% 45% 60% 40%;
+  animation-duration: 16s;
+  opacity: 0.5;
+}
+
+@keyframes waveMove {
+  0% { transform: translateX(0) translateY(0); }
+  50% { transform: translateX(-25%) translateY(-8px); }
+  100% { transform: translateX(-50%) translateY(0); }
+}
+
+/* ====== BOLLICINE NEL MARE ====== */
+.bubbles-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 2;
+}
+
+.bubble {
+  position: absolute;
+  bottom: -30px;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.5), rgba(100,200,255,0.2));
+  border-radius: 50%;
+  animation: bubbleRise linear infinite;
+  box-shadow: 0 0 8px rgba(100,200,255,0.3);
+}
+
+@keyframes bubbleRise {
+  0% {
+    transform: translateY(0) scale(0.8);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.6;
+  }
+  80% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateY(-100vh) scale(1.2);
+    opacity: 0;
+  }
+}
 </style>
 </head>
 <body>
 
-<div id="particles"></div>
-
+  
 <!-- NAVBAR -->
 <nav>
   <div class="nav-logo">
@@ -1011,6 +1162,15 @@
       <path d="M0,140 C200,110 400,170 600,140 C800,110 1000,170 1200,140 C1300,125 1370,150 1440,140 L1440,200 L0,200 Z" fill="rgba(14,74,122,0.85)"/>
     </svg>
   </div>
+  <!-- NUOVE ONDE REALISTICHE -->
+<div class="ocean-waves">
+  <div class="wave wave1"></div>
+  <div class="wave wave2"></div>
+  <div class="wave wave3"></div>
+</div>
+
+<!-- BOLLICINE -->
+<div class="bubbles-container" id="bubblesContainer"></div>
 </section>
 
 <!-- MINIGAMES -->
@@ -1270,18 +1430,7 @@
 </footer>
 
 <script>
-  // PARTICLES
-  const particlesEl = document.getElementById('particles');
-  const colors = ['#009246','#ce2b37','#1a8fe3','#f5c518','#00ffe7','rgba(255,255,255,0.5)'];
-  for (let i = 0; i < 40; i++) {
-    const p = document.createElement('div');
-    p.classList.add('particle');
-    const size = Math.random() * 5 + 2;
-    const color = colors[Math.floor(Math.random() * colors.length)];
-    p.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*100}%;background:${color};animation-duration:${Math.random()*18+10}s;animation-delay:-${Math.random()*18}s;box-shadow:0 0 ${size*2}px ${color};`;
-    particlesEl.appendChild(p);
-  }
-
+ 
   // SCROLL REVEAL
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((e, i) => {
@@ -1439,6 +1588,44 @@
   document.addEventListener('DOMContentLoaded', () => {
     updateGlobalCounter();
   });
+  // ====== BOLLICINE NEL MARE ======
+function createBubbles() {
+  const container = document.getElementById('bubblesContainer');
+  if (!container) return;
+  
+  // Crea bollicine iniziali
+  for (let i = 0; i < 12; i++) {
+    const bubble = document.createElement('div');
+    bubble.classList.add('bubble');
+    const size = Math.random() * 18 + 3;
+    bubble.style.width = size + 'px';
+    bubble.style.height = size + 'px';
+    bubble.style.left = Math.random() * 100 + '%';
+    bubble.style.animationDuration = (Math.random() * 5 + 2) + 's';
+    bubble.style.animationDelay = (Math.random() * 8) + 's';
+    container.appendChild(bubble);
+  }
+  
+  // Aggiunge nuove bollicine continuamente
+  setInterval(() => {
+    const newBubble = document.createElement('div');
+    newBubble.classList.add('bubble');
+    const size = Math.random() * 18 + 3;
+    newBubble.style.width = size + 'px';
+    newBubble.style.height = size + 'px';
+    newBubble.style.left = Math.random() * 100 + '%';
+    newBubble.style.animationDuration = (Math.random() * 5 + 2) + 's';
+    container.appendChild(newBubble);
+    
+    // Rimuovi la bolla dopo l'animazione
+    setTimeout(() => {
+      if (newBubble && newBubble.remove) newBubble.remove();
+    }, 8000);
+  }, 3500);
+}
+
+// Avvia le bollicine quando la pagina è caricata
+document.addEventListener('DOMContentLoaded', createBubbles);
 </script>
 </body>
 </html>
