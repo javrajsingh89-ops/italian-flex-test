@@ -83,88 +83,179 @@
   }
   #ocean-floor svg { width: 100%; height: 100%; }
 
-  /* ====== NAV — liquid glass pill ====== */
+ /* ====== NAV — liquid glass pill (SOLO ICONE) ====== */
+nav {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  width: min(900px, calc(100% - 24px));
+  padding: 8px 16px;
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 100px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2);
+  animation: slideDown 0.8s ease;
+  white-space: nowrap;
+}
+
+@keyframes slideDown { 
+  from { transform: translateX(-50%) translateY(-80px); opacity: 0; } 
+  to { transform: translateX(-50%) translateY(0); opacity: 1; } 
+}
+
+/* Logo solo icona (senza testo) */
+.nav-logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.nav-logo-img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+
+/* Link con solo icone */
+.nav-links {
+  display: flex;
+  gap: 6px;
+  list-style: none;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 50%;
+  transition: all 0.25s;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid transparent;
+  text-decoration: none;
+}
+
+.nav-links a:hover {
+  background: rgba(255,255,255,0.15);
+  border-color: rgba(255,255,255,0.2);
+  transform: translateY(-2px);
+}
+
+.nav-icon {
+  width: 22px;
+  height: 22px;
+  filter: brightness(0) invert(1);
+  transition: filter 0.2s;
+}
+
+.nav-links a:hover .nav-icon {
+  filter: brightness(0) invert(0.9);
+}
+
+/* Bottone speciale 🚀 (solo icona) */
+.nav-cta {
+  background: linear-gradient(135deg, #fff6bf 0%, #ffd86a 45%, #ff8d4d 100%) !important;
+  font-size: 1.2rem !important;
+  font-weight: normal !important;
+  box-shadow: 0 8px 20px rgba(255,171,74,0.45);
+  color: #10233f !important;
+}
+
+.nav-cta:hover {
+  transform: translateY(-2px) scale(1.05) !important;
+  box-shadow: 0 12px 28px rgba(255,183,77,0.62) !important;
+}
+
+/* Contatore visite navbar */
+.nav-counter {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 50px;
+  padding: 4px 12px 4px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(4px);
+  flex-shrink: 0;
+}
+
+.counter-eye {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.eye-icon {
+  width: 18px;
+  height: 18px;
+  filter: brightness(0) invert(1);
+  opacity: 0.9;
+}
+
+.counter-number {
+  font-family: 'Orbitron', monospace;
+  font-weight: 900;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  color: var(--cyan);
+  text-shadow: 0 0 4px rgba(0, 255, 231, 0.5);
+  background: rgba(0, 0, 0, 0.3);
+  padding: 2px 8px;
+  border-radius: 30px;
+  min-width: 55px;
+  text-align: center;
+}
+
+/* Responsive mobile */
+@media (max-width: 768px) {
   nav {
-    position: fixed;
-    top: 16px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 100;
-    width: min(1180px, calc(100% - 24px));
-    padding: 10px 18px;
-    min-height: 64px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 18px;
-    background: rgba(255,255,255,0.08);
-    backdrop-filter: blur(28px) saturate(180%);
-    -webkit-backdrop-filter: blur(28px) saturate(180%);
-    border: 1px solid rgba(255,255,255,0.18);
-    border-radius: 100px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2);
-    animation: slideDown 0.8s ease;
-    white-space: nowrap;
+    top: 10px;
+    padding: 6px 12px;
+    width: min(95%, calc(100% - 20px));
+    gap: 8px;
   }
-  @keyframes slideDown { from { transform: translateX(-50%) translateY(-80px); opacity: 0; } to { transform: translateX(-50%) translateY(0); opacity: 1; } }
-
-  .nav-logo {
-    font-family: 'Boogaloo', cursive;
-    font-size: 1.4rem;
-    letter-spacing: 1px;
-    display: flex;
-    gap: 0;
-    flex-shrink: 0;
-  }
-  .nav-logo .nl-i { color: var(--green); }
-  .nav-logo .nl-t { color: #fff; }
-  .nav-logo .nl-a { color: var(--red); }
-  .nav-logo .nl-l { color: var(--yellow); }
-  .nav-logo .nl-ia2 { color: var(--blue); }
-  .nav-logo .nl-n { color: var(--green); }
-  .nav-logo .nl-sp { color: transparent; width: 6px; display: inline-block; }
-  .nav-logo .nl-f { color: var(--blue); }
-  .nav-logo .nl-le { color: var(--yellow); }
-  .nav-logo .nl-lx { color: var(--red); }
-
   .nav-links {
-    display: flex;
-    gap: 10px;
-    list-style: none;
-    flex-wrap: wrap;
-    justify-content: flex-end;
+    gap: 4px;
   }
   .nav-links a {
-    color: rgba(255,255,255,0.75);
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 0.82rem;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    transition: color 0.25s, background 0.25s, border-color 0.25s, transform 0.25s;
-    padding: 8px 14px;
-    border-radius: 999px;
-    border: 1px solid transparent;
+    width: 34px;
+    height: 34px;
   }
-  .nav-links a:hover {
-    color: #fff;
-    background: rgba(255,255,255,0.08);
-    border-color: rgba(255,255,255,0.16);
-    transform: translateY(-1px);
+  .nav-icon {
+    width: 18px;
+    height: 18px;
   }
-
-  .nav-cta {
-    background: linear-gradient(135deg, #fff6bf 0%, #ffd86a 45%, #ff8d4d 100%);
-    color: #10233f !important;
-    padding: 8px 18px;
-    border-radius: 50px;
-    font-weight: 900 !important;
-    font-size: 0.82rem !important;
-    box-shadow: 0 12px 30px rgba(255,171,74,0.45);
-    transition: transform 0.2s, box-shadow 0.2s !important;
+  .nav-logo-img {
+    width: 28px;
+    height: 28px;
   }
-  .nav-cta:hover { transform: scale(1.05); box-shadow: 0 16px 36px rgba(255,183,77,0.62) !important; color: #10233f !important; }
-
+  .nav-counter {
+    padding: 2px 8px 2px 6px;
+  }
+  .eye-icon {
+    width: 14px;
+    height: 14px;
+  }
+  .counter-number {
+    font-size: 0.7rem;
+    min-width: 45px;
+    padding: 2px 5px;
+  }
+}
   /* Contatore visite navbar */
   .nav-counter {
     display: flex;
@@ -951,28 +1042,27 @@
 
  <div id="particles"></div>
  
-<!-- NAVBAR -->
+<!-- NAVBAR CON SOLO ICONE -->
 <nav>
   <div class="nav-logo">
-    <span class="nl-i">I</span><span class="nl-t">T</span><span class="nl-a">A</span><span class="nl-l">L</span><span class="nl-ia2">I</span><span class="nl-n">AN</span><span class="nl-sp"> </span><span class="nl-f">F</span><span class="nl-le">L</span><span class="nl-lx">E</span><span class="nl-f">X</span>
+    <img src="https://i.ibb.co/4nTm4r3H/ab67ade49164324b9392f10d4b5be720.webp" alt="Italian Flex Logo" class="nav-logo-img">
   </div>
   <ul class="nav-links">
-    <li><a href="#hero">Home</a></li>
-    <li><a href="#minigames">Minigames</a></li>
-    <li><a href="#coins">Monete</a></li>
-    <li><a href="#gamepasses">Gamepass</a></li>
-    <li><a href="#mappa">Mappa</a></li>
-    <li><a href="#eventi">Eventi</a></li>
-    <li><a href="#countdown" class="nav-cta">🚀 13/06/2026</a></li>
+    <li><a href="#hero" title="Home"><img src="https://i.ibb.co/TMsKn3Ds/house-2198321.png" alt="Home" class="nav-icon"></a></li>
+    <li><a href="#minigames" title="Minigames"><img src="https://i.ibb.co/ynkN6V7w/game-15111378.png" alt="Minigames" class="nav-icon"></a></li>
+    <li><a href="#coins" title="Monete"><img src="https://i.ibb.co/d0WhnW9m/profit-153178.png" alt="Monete" class="nav-icon"></a></li>
+    <li><a href="#gamepasses" title="Gamepass"><img src="https://i.ibb.co/35XdsfYR/gamepad-2602567.png" alt="Gamepass" class="nav-icon"></a></li>
+    <li><a href="#mappa" title="Mappa"><img src="https://i.ibb.co/PZV6VHgj/map-13653818.png" alt="Mappa" class="nav-icon"></a></li>
+    <li><a href="#eventi" title="Eventi"><img src="https://i.ibb.co/VpJmjmDC/event-10016852.png" alt="Eventi" class="nav-icon"></a></li>
+    <li><a href="#countdown" class="nav-cta" title="Data rilascio">🚀</a></li>
   </ul>
   <div class="nav-counter">
     <span class="counter-eye">
-      <img src="https://cdn-icons-png.freepik.com/512/10784/10784416.png" alt="visualizzazioni" class="eye-icon" onerror="this.src='https://cdn-icons-png.flaticon.com/512/10784/10784416.png'">
+      <img src="https://cdn-icons-png.freepik.com/512/10784/10784416.png" alt="visualizzazioni" class="eye-icon">
     </span>
     <span class="counter-number" id="visitorCount">0</span>
   </div>
 </nav>
-
 <!-- HERO -->
 <section id="hero">
   <div class="hero-sky"></div>
