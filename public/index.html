@@ -1326,8 +1326,13 @@
       const rect = card.getBoundingClientRect();
       const x = (e.clientX - rect.left) / rect.width - 0.5;
       const y = (e.clientY - rect.top) / rect.height - 0.5;
-      const rotateY = x * 15;
-      const rotateX = -y * 15;
+   // Rotazione: massimo 20 gradi (invece di 15 per più movimento)
+    const rotateY = x * 20;
+    const rotateX = -y * 20;
+    
+    // Leggero spostamento laterale (translate) per più effetto 3D
+    const translateX = x * 8;
+    const translateY = y * 8;
       card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(20px)`;
     });
     card.addEventListener('mouseleave', () => {
