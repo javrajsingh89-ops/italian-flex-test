@@ -1025,6 +1025,89 @@ nav {
   .observe { opacity: 0; transform: translateY(40px); transition: opacity 0.7s ease, transform 0.7s ease; }
   .observe.visible { opacity: 1; transform: translateY(0); }
 
+/* ====== TITOLO 3D OLOGRAFICO ====== */
+.hologram-title {
+  animation: hologramFloat 3s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+.hologram-title .line1 span,
+.hologram-title .line2 span {
+  display: inline-block;
+  animation: hologramLetter 2s ease-in-out infinite;
+  animation-delay: calc(var(--i) * 0.08s);
+}
+
+/* Colori originali + effetto glow */
+.hologram-title .t-i,
+.hologram-title .t-a,
+.hologram-title .t-n,
+.hologram-title .t-n-last { 
+  color: var(--green);
+  text-shadow: 0 0 5px #009246, 0 0 10px #009246;
+}
+.hologram-title .t-t { 
+  color: #fff;
+  text-shadow: 0 0 5px #fff, 0 0 10px rgba(255,255,255,0.5);
+}
+.hologram-title .t-l,
+.hologram-title .t-le { 
+  color: var(--yellow);
+  text-shadow: 0 0 5px #f5c518, 0 0 10px #f5c518;
+}
+.hologram-title .t-ia,
+.hologram-title .t-f,
+.hologram-title .t-f-last { 
+  color: var(--blue);
+  text-shadow: 0 0 5px #1a8fe3, 0 0 10px #1a8fe3;
+}
+.hologram-title .t-lx { 
+  color: var(--red);
+  text-shadow: 0 0 5px #ce2b37, 0 0 10px #ce2b37;
+}
+
+/* Indici per animazione sequenziale */
+.hologram-title .line1 span:nth-child(1) { --i: 0; }
+.hologram-title .line1 span:nth-child(2) { --i: 1; }
+.hologram-title .line1 span:nth-child(3) { --i: 2; }
+.hologram-title .line1 span:nth-child(4) { --i: 3; }
+.hologram-title .line1 span:nth-child(5) { --i: 4; }
+.hologram-title .line1 span:nth-child(6) { --i: 5; }
+.hologram-title .line1 span:nth-child(7) { --i: 6; }
+.hologram-title .line2 span:nth-child(1) { --i: 7; }
+.hologram-title .line2 span:nth-child(2) { --i: 8; }
+.hologram-title .line2 span:nth-child(3) { --i: 9; }
+.hologram-title .line2 span:nth-child(4) { --i: 10; }
+
+@keyframes hologramFloat {
+  0%, 100% {
+    transform: perspective(800px) rotateX(0deg) rotateY(0deg) translateZ(0);
+  }
+  50% {
+    transform: perspective(800px) rotateX(4deg) rotateY(4deg) translateZ(20px);
+  }
+}
+
+@keyframes hologramLetter {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+    filter: drop-shadow(0 0 2px currentColor);
+  }
+  50% {
+    transform: translateY(-6px) rotate(3deg);
+    filter: drop-shadow(0 0 12px currentColor);
+  }
+}
+
+/* Effetto hover più intenso */
+.hologram-title:hover {
+  animation: hologramFloat 1s ease-in-out infinite;
+}
+
+.hologram-title:hover span {
+  animation: hologramLetter 0.4s ease-in-out infinite;
+}
+  
   @media (max-width: 768px) {
     nav { top: 10px; padding: 10px 14px; gap: 14px; }
     .nav-links { display: none; }
@@ -1075,14 +1158,14 @@ nav {
   <div class="cloud c3"></div>
   <div class="hero-bubbles" id="heroBubbles"></div>
 
-  <h1 class="hero-title" data-tilt>
-    <span class="line1 title-stroke">
-      <span class="t-i">I</span><span class="t-t">T</span><span class="t-a">A</span><span class="t-l">L</span><span class="t-ia">I</span><span class="t-n">A</span><span style="color:#fff">N</span>
-    </span>
-    <span class="line2 title-stroke">
-      <span class="t-f">F</span><span class="t-le">L</span><span class="t-lx">E</span><span class="t-f">X</span>
-    </span>
-  </h1>
+<h1 class="hero-title hologram-title" data-tilt>
+  <span class="line1">
+    <span class="t-i">I</span><span class="t-t">T</span><span class="t-a">A</span><span class="t-l">L</span><span class="t-ia">I</span><span class="t-n">A</span><span style="color:#fff">N</span>
+  </span>
+  <span class="line2">
+    <span class="t-f">F</span><span class="t-le">L</span><span class="t-lx">E</span><span class="t-f">X</span>
+  </span>
+</h1>
 
   <div class="hero-date-badge">
     <span class="pin">📌</span>
