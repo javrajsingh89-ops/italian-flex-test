@@ -302,147 +302,121 @@ nav {
     text-align: center;
   }
 
-  /* ========= HERO ========= */
-  #hero {
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    z-index: 2;
-    padding: 120px 20px 80px;
-    overflow: hidden;
-  }
+/* ========= HERO ========= */
+#hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  z-index: 2;
+  padding: 120px 20px 80px;
+  overflow: hidden;
+}
 
-  /* HERO BACKGROUND: sky + sea */
-  .hero-sky {
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(circle at 20% 18%, rgba(255,255,255,0.18) 0%, transparent 18%),
-      radial-gradient(circle at 80% 8%, rgba(140,220,255,0.16) 0%, transparent 22%),
-      linear-gradient(180deg, #17345d 0%, #1f5f9f 42%, #2f8fcb 72%, #4dbfe5 100%);
-  }
+/* HERO BACKGROUND: sky + sea */
+.hero-sky {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 18%, rgba(255,255,255,0.18) 0%, transparent 18%),
+    radial-gradient(circle at 80% 8%, rgba(140,220,255,0.16) 0%, transparent 22%),
+    linear-gradient(180deg, #17345d 0%, #1f5f9f 42%, #2f8fcb 72%, #4dbfe5 100%);
+}
 
-  /* CLOUDS */
-  .cloud {
-    position: absolute;
-    background: rgba(255,255,255,0.85);
-    border-radius: 50px;
-    filter: blur(6px);
-    animation: cloudDrift linear infinite;
-  }
-  .cloud::before, .cloud::after {
-    content: '';
-    position: absolute;
-    background: rgba(255,255,255,0.85);
-    border-radius: 50%;
-  }
-  .c1 { width: 180px; height: 40px; top: 15%; left: -200px; animation-duration: 40s; }
-  .c1::before { width: 70px; height: 70px; top: -30px; left: 20px; }
-  .c1::after { width: 50px; height: 50px; top: -20px; left: 80px; }
-  .c2 { width: 120px; height: 30px; top: 22%; left: -150px; animation-duration: 55s; animation-delay: -20s; opacity: 0.7; }
-  .c2::before { width: 50px; height: 50px; top: -25px; left: 15px; }
-  .c3 { width: 200px; height: 45px; top: 10%; left: -250px; animation-duration: 70s; animation-delay: -35s; opacity: 0.6; }
-  .c3::before { width: 80px; height: 80px; top: -35px; left: 30px; }
-  .c3::after { width: 60px; height: 60px; top: -25px; left: 100px; }
-  @keyframes cloudDrift { from { left: -250px; } to { left: 110%; } }
+/* ===== LOGO ANIMATO, 3D E CON SCIA ===== */
+.hero-logo-container {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 30px;
+  filter: drop-shadow(0 0 15px rgba(0, 255, 255, 0.5));
+  animation: floatLogo 4s ease-in-out infinite;
+  perspective: 800px;
+}
 
-  /* ANIMATED OCEAN in hero */
-  .hero-ocean {
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 42%;
-    pointer-events: none;
-  }
-  .hero-ocean svg { width: 200%; height: 100%; animation: waveScroll 8s linear infinite; }
-  @keyframes waveScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.hero-logo-img {
+  display: block;
+  width: 180px;
+  max-width: 35vw;
+  height: auto;
+  transition: transform 0.1s ease-out;
+  will-change: transform;
+  filter: drop-shadow(0 0 8px rgba(255,255,255,0.8));
+}
 
-  .hero-waterlife,
-  .hero-bubbles {
-    position: absolute;
-    inset: auto 0 0 0;
-    height: 42%;
-    pointer-events: none;
-    z-index: 1;
-  }
-  .hero-bubbles { overflow: hidden; }
-  .marine-divider {
-    position: relative;
-    height: 96px;
-    margin-top: -12px;
-    margin-bottom: -12px;
-    overflow: hidden;
-    z-index: 3;
-    pointer-events: none;
-  }
-  .marine-divider svg {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 200%;
-    height: 100%;
-    animation: marineWave 14s linear infinite;
-  }
-  .marine-divider .wave-mid { opacity: 0.55; animation-duration: 18s; }
-  .marine-divider .wave-top { opacity: 0.36; animation-duration: 22s; }
-  @keyframes marineWave {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
+/* Scia luminosa dietro il logo */
+.light-trail {
+  position: absolute;
+  top: 10%;
+  left: -30%;
+  width: 160%;
+  height: 80%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.7), 
+    rgba(0, 255, 255, 0.9), 
+    rgba(255, 255, 255, 0.7), 
+    transparent);
+  filter: blur(12px);
+  opacity: 0;
+  transform: skewX(-20deg);
+  pointer-events: none;
+  z-index: -1;
+  animation: trailMove 5s linear infinite;
+}
 
-  /* TITLE */
-  .hero-title {
-    font-family: 'Boogaloo', cursive;
-    font-size: clamp(5rem, 14vw, 12rem);
-    line-height: 0.9;
-    letter-spacing: -2px;
-    margin-bottom: 10px;
-    animation: fadeInUp 1s ease 0.3s both;
-    position: relative;
-    transform-style: preserve-3d;
-    transition: transform 0.18s ease-out;
-    text-shadow: 0 18px 40px rgba(4,15,30,0.28);
+/* Animazione fluttuante */
+@keyframes floatLogo {
+  0% {
+    transform: translateY(0px) rotate(0deg);
   }
-  .title-stroke { -webkit-text-stroke: 3px rgba(0,0,0,0.4); }
-  .t-i { color: var(--green); }
-  .t-t { color: #fff; }
-  .t-a { color: var(--red); }
-  .t-l { color: var(--yellow); }
-  .t-ia { color: var(--blue); }
-  .t-n { color: var(--green); }
-  .t-f { color: var(--blue); text-shadow: 0 0 40px rgba(26,143,227,0.9); }
-  .t-le { color: var(--yellow); text-shadow: 0 0 40px rgba(245,197,24,0.9); }
-  .t-lx { color: var(--red); text-shadow: 0 0 40px rgba(206,43,55,0.9); }
-
-  .hero-date-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    background: rgba(255,255,255,0.12);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.25);
-    border-radius: 50px;
-    padding: 10px 28px;
-    font-weight: 900;
-    font-size: 1rem;
-    letter-spacing: 2px;
-    margin: 20px 0 40px;
-    animation: fadeInUp 1s ease 0.7s both;
+  50% {
+    transform: translateY(-15px) rotate(2deg);
   }
-  .hero-date-badge .pin { animation: bounce 1s ease infinite; display: inline-block; }
-  @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
-
-  .hero-buttons {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-    animation: fadeInUp 1s ease 0.9s both;
+  100% {
+    transform: translateY(0px) rotate(0deg);
   }
+}
 
+/* Animazione della scia che va da sinistra a destra */
+@keyframes trailMove {
+  0% {
+    left: -50%;
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.8;
+  }
+  80% {
+    opacity: 0.8;
+  }
+  100% {
+    left: 100%;
+    opacity: 0;
+  }
+}
+
+/* Effetto specchio/riflesso */
+.hero-logo-container::after {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  left: 10%;
+  width: 80%;
+  height: 30px;
+  background: radial-gradient(ellipse, rgba(255,255,255,0.4), transparent 70%);
+  filter: blur(8px);
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: reflectionPulse 3s ease-in-out infinite;
+}
+
+@keyframes reflectionPulse {
+  0%, 100% { opacity: 0.3; transform: scaleX(0.8); }
+  50% { opacity: 0.8; transform: scaleX(1.1); }
+}  
   /* BOTTONI ANIMATI */
   .btn-roblox, .btn-discord {
     display: inline-flex;
@@ -1163,14 +1137,11 @@ nav {
   <div class="cloud c3"></div>
   <div class="hero-bubbles" id="heroBubbles"></div>
 
-<h1 class="hero-title hologram-title" data-tilt>
-  <span class="line1">
-    <span class="t-i">I</span><span class="t-t">T</span><span class="t-a">A</span><span class="t-l">L</span><span class="t-ia">I</span><span class="t-n">A</span><span style="color:#fff">N</span>
-  </span>
-  <span class="line2">
-    <span class="t-f">F</span><span class="t-le">L</span><span class="t-lx">E</span><span class="t-f">X</span>
-  </span>
-</h1>
+<!-- Logo Animato 3D con Scia -->
+<div class="hero-logo-container" id="heroLogo">
+  <img src="https://i.ibb.co/4nTm4r3H/ab67ade49164324b9392f10d4b5be720.webp" alt="Italian Flex Logo" class="hero-logo-img" id="floatingLogo">
+  <div class="light-trail" id="lightTrail"></div>
+</div>
 
   <div class="hero-date-badge">
     <span class="pin">📌</span>
