@@ -803,7 +803,7 @@
     margin-bottom: -1px;
   }
 
-  /* SEZIONE GALASSIA */
+  /* SEZIONE GALASSIA - NUOVO STILE PER IFRAME */
   .galaxy-section {
     background: radial-gradient(ellipse at 30% 40%, #0a0a1a, #020208);
     position: relative;
@@ -830,69 +830,82 @@
   .profiles-grid {
     display: flex;
     justify-content: center;
-    gap: 60px;
+    gap: 30px;
     flex-wrap: wrap;
-    margin-top: 80px;
-    margin-bottom: 100px;
+    margin-top: 40px;
+    margin-bottom: 60px;
     position: relative;
     z-index: 5;
   }
-  .profile-card {
-    background: rgba(10, 15, 30, 0.7);
+  .profile-card-iframe {
+    background: rgba(10, 15, 30, 0.85);
     backdrop-filter: blur(12px);
     border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 48px;
-    width: 320px;
-    height: 460px;
-    padding: 40px 25px;
+    border-radius: 24px;
+    width: 380px;
+    padding: 20px;
     text-align: center;
-    cursor: pointer;
-    transition: all 0.25s ease;
+    transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    gap: 15px;
     transform-style: preserve-3d;
-    transition: transform 0.2s ease-out;
   }
-  .profile-card:hover {
+  .profile-card-iframe:hover {
     background: rgba(80, 100, 160, 0.7);
     border-color: #5865F2;
     box-shadow: 0 20px 35px rgba(0,0,0,0.6);
+    transform: translateY(-8px);
+  }
+  .profile-iframe-header {
+    width: 100%;
   }
   .profile-name {
     font-family: 'Boogaloo', cursive;
-    font-size: 2rem;
+    font-size: 1.8rem;
     background: linear-gradient(135deg, #fff, #9b87ff);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    margin-bottom: 15px;
+    margin-bottom: 5px;
   }
   .profile-role {
-    font-size: 1rem;
+    font-size: 0.85rem;
     color: #aaa;
     letter-spacing: 1px;
-    margin-bottom: 35px;
+  }
+  .guns-iframe {
+    width: 100%;
+    height: 350px;
+    border: none;
+    border-radius: 16px;
+    background: rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+  }
+  .guns-iframe:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
   }
   .profile-btn {
     background: linear-gradient(135deg, #1e2a3a, #0f1a24);
     border: 1px solid #5865F2;
     color: white;
-    padding: 12px 24px;
+    padding: 10px 20px;
     border-radius: 50px;
     font-family: 'Orbitron', monospace;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     font-weight: bold;
     letter-spacing: 1px;
     text-decoration: none;
     transition: all 0.25s ease;
     display: inline-block;
-    margin-top: 20px;
+    width: 100%;
+    text-align: center;
     cursor: pointer;
   }
   .profile-btn:hover {
-    transform: scale(1.05);
+    transform: scale(1.03);
     background: #5865F2;
     box-shadow: 0 0 15px #5865F2;
     border-color: white;
@@ -924,8 +937,9 @@
     .map-showcase { grid-template-columns: 1fr; }
     .events-banner { padding: 30px; }
     .coins-grid { grid-template-columns: 1fr; }
-    .profile-card { width: 260px; height: 400px; padding: 30px 20px; }
-    .profile-name { font-size: 1.6rem; }
+    .profile-card-iframe { width: 300px; padding: 15px; }
+    .guns-iframe { height: 280px; }
+    .profile-name { font-size: 1.4rem; }
     .hero-buttons { flex-direction: column; align-items: center; }
   }
 </style>
@@ -1195,32 +1209,63 @@
 <!-- TRANSIZIONE VERSO GALASSIA -->
 <div class="galaxy-transition-top"></div>
 
-<!-- SEZIONE GALASSIA -->
+<!-- SEZIONE GALASSIA - con iframe guns.lol -->
 <section class="galaxy-section" id="galaxy">
   <div class="floating-stars" id="starsContainer"></div>
-  <div class="container" style="position: relative; z-index: 10; text-align: center; padding: 80px 20px;">
+  <div class="container" style="position: relative; z-index: 10; text-align: center; padding: 60px 20px;">
+    <h2 class="section-title" style="color: white; text-align: center;">Il Team</h2>
+    <div class="section-divider" style="margin: 0 auto 50px auto;"></div>
+    
     <div class="profiles-grid">
-      <div class="profile-card" data-tilt-card>
-        <div>
+      
+      <!-- Profilo 1: itznotdream -->
+      <div class="profile-card-iframe" data-tilt-card>
+        <div class="profile-iframe-header">
           <div class="profile-name">itznotdream</div>
           <div class="profile-role">⚡ Game Dev</div>
         </div>
-        <button class="profile-btn" onclick="window.open('https://guns.lol/itznotdream', '_blank')">VISITA GUNS.LOL</button>
+        <iframe 
+          src="https://guns.lol/itznotdream" 
+          class="guns-iframe"
+          title="itznotdream guns.lol profile"
+          loading="lazy"
+          sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-top-navigation">
+        </iframe>
+        <a href="https://guns.lol/itznotdream" target="_blank" class="profile-btn">Apri su guns.lol →</a>
       </div>
-      <div class="profile-card" data-tilt-card>
-        <div>
+      
+      <!-- Profilo 2: FryzDevx -->
+      <div class="profile-card-iframe" data-tilt-card>
+        <div class="profile-iframe-header">
           <div class="profile-name">𝓕𝓻𝔂𝔃𝓓𝓮𝔁</div>
           <div class="profile-role">🛠️ Game Dev</div>
         </div>
-        <button class="profile-btn" onclick="window.open('https://guns.lol/fryzdevx', '_blank')">VISITA GUNS.LOL</button>
+        <iframe 
+          src="https://guns.lol/fryzdevx" 
+          class="guns-iframe"
+          title="FryzDevx guns.lol profile"
+          loading="lazy"
+          sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-top-navigation">
+        </iframe>
+        <a href="https://guns.lol/fryzdevx" target="_blank" class="profile-btn">Apri su guns.lol →</a>
       </div>
-      <div class="profile-card" data-tilt-card>
-        <div>
+      
+      <!-- Profilo 3: javraj (exotic) -->
+      <div class="profile-card-iframe" data-tilt-card>
+        <div class="profile-iframe-header">
           <div class="profile-name">𝖊𝖝𝖔𝖙𝖎𝖈</div>
           <div class="profile-role">🌐 Website Dev</div>
         </div>
-        <button class="profile-btn" onclick="window.open('https://guns.lol/javraj', '_blank')">VISITA GUNS.LOL</button>
+        <iframe 
+          src="https://guns.lol/javraj" 
+          class="guns-iframe"
+          title="exotic guns.lol profile"
+          loading="lazy"
+          sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-top-navigation">
+        </iframe>
+        <a href="https://guns.lol/javraj" target="_blank" class="profile-btn">Apri su guns.lol →</a>
       </div>
+      
     </div>
   </div>
 </section>
@@ -1372,7 +1417,7 @@
 
   async function updateGlobalCounter() {
     try {
-      const incrementRes = await fetch('/api/visitors/increment', {
+      const incrementRes = await fetch('https://italian-flex-test.onrender.com/api/visitors/increment', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
       });
