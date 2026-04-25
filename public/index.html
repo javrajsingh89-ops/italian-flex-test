@@ -827,77 +827,93 @@
     inset: 0;
     pointer-events: none;
   }
-  .profiles-grid {
-    display: flex;
-    justify-content: center;
-    gap: 60px;
-    flex-wrap: wrap;
-    margin-top: 80px;
-    margin-bottom: 100px;
-    position: relative;
-    z-index: 5;
-  }
-  .profile-card {
-    background: rgba(10, 15, 30, 0.7);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 48px;
-    width: 320px;
-    height: 460px;
-    padding: 40px 25px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.25s ease;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    transform-style: preserve-3d;
-    transition: transform 0.2s ease-out;
-  }
-  .profile-card:hover {
-    background: rgba(80, 100, 160, 0.7);
-    border-color: #5865F2;
-    box-shadow: 0 20px 35px rgba(0,0,0,0.6);
-  }
-  .profile-name {
-    font-family: 'Boogaloo', cursive;
-    font-size: 2rem;
-    background: linear-gradient(135deg, #fff, #9b87ff);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    margin-bottom: 15px;
-  }
-  .profile-role {
-    font-size: 1rem;
-    color: #aaa;
-    letter-spacing: 1px;
-    margin-bottom: 35px;
-  }
-  .profile-btn {
-    background: linear-gradient(135deg, #1e2a3a, #0f1a24);
-    border: 1px solid #5865F2;
-    color: white;
-    padding: 12px 24px;
-    border-radius: 50px;
-    font-family: 'Orbitron', monospace;
-    font-size: 0.8rem;
-    font-weight: bold;
-    letter-spacing: 1px;
-    text-decoration: none;
-    transition: all 0.25s ease;
-    display: inline-block;
-    margin-top: 20px;
-    cursor: pointer;
-  }
-  .profile-btn:hover {
-    transform: scale(1.05);
-    background: #5865F2;
-    box-shadow: 0 0 15px #5865F2;
-    border-color: white;
-  }
+.profiles-grid {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-top: 40px;
+  margin-bottom: 60px;
+  position: relative;
+  z-index: 5;
+}
 
+.profile-card-glass {
+  background: rgba(10, 15, 30, 0.75);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 32px;
+  width: 280px; /* Larghezza fissa per uniformità */
+  padding: 30px 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  transform-style: preserve-3d;
+}
+
+/* Effetto hover */
+.profile-card-glass:hover {
+  background: rgba(80, 100, 160, 0.8);
+  border-color: #5865F2;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  transform: translateY(-10px) scale(1.02);
+}
+
+.profile-name-glass {
+  font-family: 'Boogaloo', cursive;
+  font-size: 1.8rem;
+  background: linear-gradient(135deg, #fff, #9b87ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 4px;
+}
+
+.profile-role {
+  font-size: 0.85rem;
+  color: #aaa;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.profile-btn {
+  background: linear-gradient(135deg, #1e2a3a, #0f1a24);
+  border: 1px solid #5865F2;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 50px;
+  font-family: 'Orbitron', monospace;
+  font-size: 0.75rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+}
+
+.profile-btn:hover {
+  transform: scale(1.03);
+  background: #5865F2;
+  box-shadow: 0 0 15px #5865F2;
+  border-color: white;
+}
+
+/* Responsive: su schermi piccoli, una card per riga */
+@media (max-width: 768px) {
+  .profile-card-glass {
+    width: 260px;
+    padding: 24px 16px;
+  }
+  .profile-name-glass {
+    font-size: 1.5rem;
+  }
+}
   /* FOOTER SEMPLICE */
   footer {
     background: #0a0f2a;
@@ -1200,96 +1216,51 @@
   <div class="floating-stars" id="starsContainer"></div>
   <div class="container" style="position: relative; z-index: 10; text-align: center; padding: 80px 20px;">
     <div class="profiles-grid">
-      
-  <!-- Profilo 1: itznotdream (guns.lol) -->
+  
+  <!-- Profilo 1: itznotdream -->
   <div class="profile-card-glass" data-tilt-card>
-    <div class="profile-avatar">
-      <div class="avatar-icon">🚀</div>
-    </div>
     <div class="profile-name-glass">itznotdream</div>
     <div class="profile-role">⚡ Game Dev</div>
-    <div class="profile-bio">
-      Sviluppatore principale di Italian Flex. Creator di esperienze uniche su Roblox.
-    </div>
-    <div class="profile-stats">
-      <span>⭐ 10K+ followers</span>
-    </div>
     <button class="profile-btn" onclick="window.open('https://guns.lol/itznotdream', '_blank')">
       VISITA GUNS.LOL →
     </button>
   </div>
   
-  <!-- Profilo 2: FryzDevx (guns.lol) -->
+  <!-- Profilo 2: FryzDevx -->
   <div class="profile-card-glass" data-tilt-card>
-    <div class="profile-avatar">
-      <div class="avatar-icon">🛠️</div>
-    </div>
     <div class="profile-name-glass">𝓕𝓻𝔂𝔃𝓓𝓮𝔁</div>
     <div class="profile-role">🛠️ Game Dev</div>
-    <div class="profile-bio">
-      Co-sviluppatore e game designer. Specializzato in meccaniche di gioco innovative.
-    </div>
-    <div class="profile-stats">
-      <span>⭐ 8K+ followers</span>
-    </div>
     <button class="profile-btn" onclick="window.open('https://guns.lol/fryzdevx', '_blank')">
       VISITA GUNS.LOL →
     </button>
   </div>
   
-  <!-- Profilo 3: javraj / exotic (guns.lol) -->
+  <!-- Profilo 3: javraj / exotic -->
   <div class="profile-card-glass" data-tilt-card>
-    <div class="profile-avatar">
-      <div class="avatar-icon">🌐</div>
-    </div>
     <div class="profile-name-glass">𝖊𝖝𝖔𝖙𝖎𝖈</div>
     <div class="profile-role">🌐 Website Dev</div>
-    <div class="profile-bio">
-      Sviluppatore web e UI/UX designer. Creatore di questo sito e dell'interfaccia di gioco.
-    </div>
-    <div class="profile-stats">
-      <span>⭐ 5K+ followers</span>
-    </div>
     <button class="profile-btn" onclick="window.open('https://guns.lol/javraj', '_blank')">
       VISITA GUNS.LOL →
     </button>
   </div>
 
-  <!-- NUOVO Profilo 4: Canale YouTube -->
+  <!-- Profilo 4: Canale YouTube -->
   <div class="profile-card-glass" data-tilt-card>
-    <div class="profile-avatar">
-      <div class="avatar-icon">📺</div>
-    </div>
     <div class="profile-name-glass">Italian Flex</div>
     <div class="profile-role">🎬 Canale YouTube Ufficiale</div>
-    <div class="profile-bio">
-      Video, game update, meme e anteprime esclusive. Il lato video di Italian Flex!
-    </div>
-    <div class="profile-stats">
-      <span>▶️ 37 iscritti • 4 video</span>
-    </div>
     <button class="profile-btn" onclick="window.open('https://www.youtube.com/@ItalianFlex', '_blank')">
       VISITA IL CANALE →
     </button>
   </div>
 
-  <!-- NUOVO Profilo 5: Profilo TikTok -->
+  <!-- Profilo 5: Profilo TikTok -->
   <div class="profile-card-glass" data-tilt-card>
-    <div class="profile-avatar">
-      <div class="avatar-icon">📱</div>
-    </div>
     <div class="profile-name-glass">@italian_flex_</div>
     <div class="profile-role">🎵 TikTok Ufficiale</div>
-    <div class="profile-bio">
-      Short, challenge e contenuti esclusivi. Seguici per non perderti nessuna novità!
-    </div>
-    <div class="profile-stats">
-      <span>⏳ Unisciti alla community!</span>
-    </div>
     <button class="profile-btn" onclick="window.open('https://www.tiktok.com/@italian_flex_', '_blank')">
       SEGUICI SU TIKTOK →
     </button>
-  </div>  <!-- chiude profiles-grid -->
+  </div>
 </div>    <!-- chiude container -->
 </section>  <!-- chiude galaxy-section -->
 
